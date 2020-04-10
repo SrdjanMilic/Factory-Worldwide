@@ -1,4 +1,4 @@
-# table-statistics
+# Table statistics
 
 ## Project setup
 ```
