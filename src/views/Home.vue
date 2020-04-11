@@ -1,7 +1,6 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <TableFields msg="Table Fields" />
+    <TableFields msg="This is the table fields page" />
   </div>
 </template>
 

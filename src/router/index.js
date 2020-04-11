@@ -11,12 +11,12 @@ const routes = [
     component: TableFields
   },
   {
-    path: '/statistic',
-    name: 'Statistic',
+    path: '/statistics',
+    name: 'Statistics',
     // route level code-splitting
     // this generates a separate chunk (statistic.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "statistic" */ '../views/Statistic.vue')
+    component: () => import(/* webpackChunkName: "statistic" */ '../views/Statistics.vue')
   }
 ]
 
