@@ -3,10 +3,10 @@
     <table>
       <tr>
         <th>A</th>
-        <td>{{ this.randomSigns }}</td>
-        <td>{{ initialValue }}</td>
-        <td v-show="this.randomSigns == '+'">&#x2B06;</td>
-        <td v-show="this.randomSigns == '-'">&#x2B07;</td>
+        <td class="sign">{{ this.randomSign }}</td>
+        <td>{{ randomValue }}</td>
+        <td v-show="this.randomSign == '+'">&#x2B06;</td>
+        <td v-show="this.randomSign == '-'">&#x2B07;</td>
       </tr>
     </table>
     <button @click="toggleInterval()">
@@ -25,36 +25,51 @@ export default {
   data () {
     return {
       startStop: true,
-      initialValue: 3,
+      randomValue: 3,
+      randomSign: '+',
       signsArray: ['+', '-'],
-      randomNumber: Number((Math.random() * 1 + 1).toFixed(2)),
-      // numberInterval: setInterval(this.calculations, 2000),
-      numberInterval: null
-      // signsInterval: setInterval(this.randomSigns, 2000)
+      interval: null
     }
   },
   computed: {
-    randomSigns () {
-      const sign = this.signsArray[Math.floor(Math.random() * this.signsArray.length)]
-      return sign
-    }
   },
   methods: {
     toggleInterval () {
       this.startStop = !this.startStop
       if (this.startStop) {
-        this.numberInterval = setInterval(this.calculations, 2000)
+        this.interval = setInterval(this.calculations, 2000)
       } else {
-        clearInterval(this.numberInterval)
+        clearInterval(this.interval)
       }
-      console.log(this.startStop)
     },
     calculations () {
-      this.randomSigns === '+' ? this.initialValue += this.randomNumber : this.initialValue -= this.randomNumber
+      const randomNumber = Number((Math.random() * 1 + 1).toFixed(2))
+      this.randomSign = this.signsArray[Math.floor(Math.random() * this.signsArray.length)]
+      this.randomSign === '+' ? this.randomValue += randomNumber : this.randomValue -= randomNumber
     }
   },
   mounted () {
-    this.numberInterval = setInterval(this.calculations, 2000)
+    this.interval = setInterval(this.calculations, 2000)
   }
 }
 </script>
+
+<style lang="scss" scoped>
+  .sign {
+    width: 12px;
+    text-align: center;
+  }
+  button {
+    border: 1px solid transparent;
+    border-radius: 0;
+    background-color: #42b983;
+    color: #ffffff;
+    margin-top: 7px;
+    padding: 5px 10px;
+
+    &:hover {
+      opacity: 0.9;
+      cursor: pointer;
+    }
+  }
+</style>
