@@ -26,6 +26,21 @@
       <span v-show="this.startStopB === true">Stop</span>
       <span v-show="this.startStopB === false">Start</span>
     </button>
+    <!--testing-->
+    <div class="statistics">
+      <table>
+        <tr>
+          <th>Field</th>
+          <th>Value</th>
+          <th>Time</th>
+        </tr>
+        <tr v-for="item in changes" :key="item.value">
+          <td>{{ item.field }}</td>
+          <td>{{ item.value }}</td>
+          <td>{{ item.time }}</td>
+        </tr>
+      </table>
+    </div>
   </div>
 </template>
 
@@ -46,11 +61,11 @@ export default {
       randomSignB: '+',
       signsArray: ['+', '-'],
       intervalA: null,
-      intervalB: null
+      intervalB: null,
+      changes: []
     }
   },
-  computed: {
-  },
+  computed: {},
   methods: {
     initialNumbersArray () {
       for (let i = 0; i < 2; i++) {
@@ -80,19 +95,31 @@ export default {
       }
     },
     calculationsA () {
-      this.randomSignA = this.signsArray[Math.floor(Math.random() * this.signsArray.length)]
-      this.randomSignA === '+' ? this.initialValueA += this.randomNumbersArray[0] : this.initialValueA -= this.randomNumbersArray[0]
+      this.randomSignA = this.signsArray[
+        Math.floor(Math.random() * this.signsArray.length)
+      ]
+      this.randomSignA === '+'
+        ? (this.initialValueA += this.randomNumbersArray[0])
+        : (this.initialValueA -= this.randomNumbersArray[0])
       const d = new Date()
-      console.log(d)
-      console.log(this.randomNumbersArray[0])
+      // console.log(d.toLocaleTimeString())
+      // console.log(this.randomNumbersArray[0])
+      // this.changes.push(this.randomNumbersArray[0])
+      // this.changes.push(d.toLocaleTimeString())
+      // console.log(this.changes)
+      const newChange = {}
+      newChange.field = 'A'
+      newChange.value = this.randomNumbersArray[0]
+      newChange.time = d.toLocaleTimeString()
+      this.changes.push(newChange)
     },
     calculationsB () {
-      this.randomSignB = this.signsArray[Math.floor(Math.random() * this.signsArray.length)]
-      this.randomSignB === '+' ? this.initialValueB += this.randomNumbersArray[1] : this.initialValueB -= this.randomNumbersArray[1]
-    },
-    date () {
-      const d = new Date()
-      console.log(d)
+      this.randomSignB = this.signsArray[
+        Math.floor(Math.random() * this.signsArray.length)
+      ]
+      this.randomSignB === '+'
+        ? (this.initialValueB += this.randomNumbersArray[1])
+        : (this.initialValueB -= this.randomNumbersArray[1])
     }
   },
   mounted () {
@@ -106,24 +133,24 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .table-b {
-    margin-top: 15px;
-  }
-  .sign {
-    width: 12px;
-    text-align: center;
-  }
-  button {
-    border: 1px solid transparent;
-    border-radius: 0;
-    background-color: #42b983;
-    color: #ffffff;
-    margin-top: 7px;
-    padding: 5px 10px;
+.table-b {
+  margin-top: 15px;
+}
+.sign {
+  width: 12px;
+  text-align: center;
+}
+button {
+  border: 1px solid transparent;
+  border-radius: 0;
+  background-color: #42b983;
+  color: #ffffff;
+  margin-top: 7px;
+  padding: 5px 10px;
 
-    &:hover {
-      opacity: 0.9;
-      cursor: pointer;
-    }
+  &:hover {
+    opacity: 0.9;
+    cursor: pointer;
   }
+}
 </style>
