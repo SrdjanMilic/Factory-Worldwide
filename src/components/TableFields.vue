@@ -82,10 +82,17 @@ export default {
     calculationsA () {
       this.randomSignA = this.signsArray[Math.floor(Math.random() * this.signsArray.length)]
       this.randomSignA === '+' ? this.initialValueA += this.randomNumbersArray[0] : this.initialValueA -= this.randomNumbersArray[0]
+      const d = new Date()
+      console.log(d)
+      console.log(this.randomNumbersArray[0])
     },
     calculationsB () {
       this.randomSignB = this.signsArray[Math.floor(Math.random() * this.signsArray.length)]
       this.randomSignB === '+' ? this.initialValueB += this.randomNumbersArray[1] : this.initialValueB -= this.randomNumbersArray[1]
+    },
+    date () {
+      const d = new Date()
+      console.log(d)
     }
   },
   mounted () {
@@ -93,6 +100,7 @@ export default {
     this.initialNumbersArray = setInterval(this.replaceNumbersArray, 2000)
     this.intervalA = setInterval(this.calculationsA, 2000)
     this.intervalB = setInterval(this.calculationsB, 2000)
+    // console.log(setInterval(this.date, 2000))
   }
 }
 </script>
