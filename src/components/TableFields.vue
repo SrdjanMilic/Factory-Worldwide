@@ -1,5 +1,5 @@
 <template>
-  <div class="table-fields">
+  <div>
     <table class="table-a">
       <tr>
         <th>A</th>
@@ -33,24 +33,32 @@
 export default {
   name: 'TableFields',
   props: {
-    changes: {
+    changesA: {
+      type: Array,
+      required: false
+    },
+    changesB: {
       type: Array,
       required: false
     }
   },
   data () {
     return {
+      // letters: ['A', 'B'],
       startStopA: true,
       startStopB: true,
       initialValueA: 3,
       initialValueB: 3,
+      // initialValue: 3,
       randomNumbersArray: [],
       randomSignA: '+',
       randomSignB: '+',
+      // randomSign: '+',
       signsArray: ['+', '-'],
       intervalA: null,
       intervalB: null,
-      localChanges: []
+      localChangesA: [],
+      localChangesB: []
     }
   },
   computed: {},
@@ -94,8 +102,8 @@ export default {
       newChange.field = 'A'
       newChange.value = this.randomNumbersArray[0]
       newChange.time = date.toLocaleTimeString()
-      this.changes.push(newChange)
-      this.$emit('update:changes', this.localChanges)
+      this.changesA.push(newChange)
+      this.$emit('update:changesA', this.localChangesA)
     },
     calculationsB () {
       this.randomSignB = this.signsArray[
@@ -104,6 +112,13 @@ export default {
       this.randomSignB === '+'
         ? (this.initialValueB += this.randomNumbersArray[1])
         : (this.initialValueB -= this.randomNumbersArray[1])
+      const date = new Date()
+      const newChange = {}
+      newChange.field = 'B'
+      newChange.value = this.randomNumbersArray[1]
+      newChange.time = date.toLocaleTimeString()
+      this.changesB.push(newChange)
+      this.$emit('update:changesB', this.localChangesB)
     }
   },
   mounted () {

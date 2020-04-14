@@ -4,7 +4,7 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/statistics">Statistics</router-link>
     </div>
-    <router-view :changes.sync="changes" />
+    <router-view :changesA.sync="changesA" :changesB.sync="changesB" />
   </div>
 </template>
 
@@ -13,7 +13,8 @@ export default {
   name: 'App',
   data () {
     return {
-      changes: []
+      changesA: [],
+      changesB: []
     }
   }
 }
