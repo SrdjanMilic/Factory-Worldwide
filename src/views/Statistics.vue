@@ -6,29 +6,31 @@
         <th>Value</th>
         <th>Time</th>
       </tr>
-      <tr v-for="item in changes" :key="item.value">
-        <td>{{ item.field }}</td>
-        <td>{{ item.value }}</td>
-        <td>{{ item.time }}</td>
+      <tr v-for="(change, index) in changes" :key="index">
+        <td>{{ change.field }}</td>
+        <td>{{ change.value }}</td>
+        <td>{{ change.time }}</td>
       </tr>
     </table>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-// import TableFields from '@/components/TableFields.vue'
 
 export default {
   name: 'Statistics',
   components: {
-    // TableFields
+  },
+  props: {
+    changes: {
+      type: Array,
+      required: true
+    }
   },
   data () {
+    return {}
   },
-  methods: {
-  },
-  mounted () {
-  }
+  methods: {},
+  mounted () {}
 }
 </script>

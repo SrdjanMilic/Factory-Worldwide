@@ -26,21 +26,6 @@
       <span v-show="this.startStopB === true">Stop</span>
       <span v-show="this.startStopB === false">Start</span>
     </button>
-    <!--testing-->
-    <div class="statistics">
-      <table>
-        <tr>
-          <th>Field</th>
-          <th>Value</th>
-          <th>Time</th>
-        </tr>
-        <tr v-for="item in changes" :key="item.value">
-          <td>{{ item.field }}</td>
-          <td>{{ item.value }}</td>
-          <td>{{ item.time }}</td>
-        </tr>
-      </table>
-    </div>
   </div>
 </template>
 
@@ -48,7 +33,10 @@
 export default {
   name: 'TableFields',
   props: {
-    msg: String
+    changes: {
+      type: Array,
+      required: false
+    }
   },
   data () {
     return {
@@ -62,7 +50,7 @@ export default {
       signsArray: ['+', '-'],
       intervalA: null,
       intervalB: null,
-      changes: []
+      localChanges: []
     }
   },
   computed: {},
@@ -101,17 +89,13 @@ export default {
       this.randomSignA === '+'
         ? (this.initialValueA += this.randomNumbersArray[0])
         : (this.initialValueA -= this.randomNumbersArray[0])
-      const d = new Date()
-      // console.log(d.toLocaleTimeString())
-      // console.log(this.randomNumbersArray[0])
-      // this.changes.push(this.randomNumbersArray[0])
-      // this.changes.push(d.toLocaleTimeString())
-      // console.log(this.changes)
+      const date = new Date()
       const newChange = {}
       newChange.field = 'A'
       newChange.value = this.randomNumbersArray[0]
-      newChange.time = d.toLocaleTimeString()
+      newChange.time = date.toLocaleTimeString()
       this.changes.push(newChange)
+      this.$emit('update:changes', this.localChanges)
     },
     calculationsB () {
       this.randomSignB = this.signsArray[

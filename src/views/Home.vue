@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <TableFields msg="This is the table fields page" />
+    <TableFields />
   </div>
 </template>
 

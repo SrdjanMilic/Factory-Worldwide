@@ -4,9 +4,20 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/statistics">Statistics</router-link>
     </div>
-    <router-view/>
+    <router-view :changes.sync="changes" />
   </div>
 </template>
+
+<script>
+export default {
+  name: 'App',
+  data () {
+    return {
+      changes: []
+    }
+  }
+}
+</script>
 
 <style lang="scss">
 #app {
