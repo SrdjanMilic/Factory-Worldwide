@@ -44,6 +44,7 @@ export default {
   },
   data () {
     return {
+      fields: ['A', 'B'],
       startStop: {
         A: true,
         B: true
@@ -70,23 +71,18 @@ export default {
   },
   computed: {},
   methods: {
-    firstObjectA () {
-      const date = new Date()
-      const foA = {} // foA = first object A
-      foA.field = 'A'
-      foA.value = Number((Math.random() * 1 + 1).toFixed(2))
-      foA.time = date.toLocaleTimeString()
-      this.changesA.push(foA)
-      this.$emit('update:changesA', this.localChanges.A)
-    },
-    firstObjectB () {
-      const date = new Date()
-      const foB = {} // foA = first object A
-      foB.field = 'A'
-      foB.value = Number((Math.random() * 1 + 1).toFixed(2))
-      foB.time = date.toLocaleTimeString()
-      this.changesA.push(foB)
-      this.$emit('update:changesB', this.localChanges.B)
+    firstObjects () {
+      for (let i = 0; i < this.fields.length; i++) {
+        const date = new Date()
+        const obj = {}
+        obj.field = this.fields[i]
+        obj.value = Number((Math.random() * 1 + 1).toFixed(2))
+        obj.time = date.toLocaleTimeString()
+        this.changesA.push(obj[0])
+        this.changesB.push(obj[1])
+        this.$emit('update:changesA', this.localChanges.A)
+        this.$emit('update:changesB', this.localChanges.B)
+      }
     },
     replaceNumbersArray () { // replace random A, B numbers at time interval
       const n1 = Number((Math.random() * 1 + 1).toFixed(2)) // n1 = first number
@@ -141,14 +137,10 @@ export default {
     }
   },
   mounted () {
+    this.firstObjects()
     setInterval(this.replaceNumbersArray, 2000)
-    this.firstObjectA()
-    this.firstObjectB()
     this.interval.A = setInterval(this.calculationsA, 2000)
     this.interval.B = setInterval(this.calculationsB, 2000)
-
-    const values = Object.values(this.startStop)
-    console.log(values)
   }
 }
 </script>
