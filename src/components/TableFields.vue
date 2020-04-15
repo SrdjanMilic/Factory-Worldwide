@@ -63,13 +63,13 @@ export default {
   },
   computed: {},
   methods: {
-    initialNumbersArray () {
+    firstNumbersArray () { // first A, B numbers
       for (let i = 0; i < 2; i++) {
         const randomNumber = Number((Math.random() * 1 + 1).toFixed(2))
         this.randomNumbersArray.push(randomNumber)
       }
     },
-    replaceNumbersArray () {
+    replaceNumbersArray () { // replace first A, B numbers
       const n1 = Number((Math.random() * 1 + 1).toFixed(2))
       const n2 = Number((Math.random() * 1 + 1).toFixed(2))
       this.randomNumbersArray.splice(0, 2, n1, n2)
@@ -122,11 +122,11 @@ export default {
     }
   },
   mounted () {
-    this.initialNumbersArray()
-    this.initialNumbersArray = setInterval(this.replaceNumbersArray, 2000)
+    this.firstNumbersArray()
+    this.firstNumbersArray = setInterval(this.replaceNumbersArray, 2000)
     this.intervalA = setInterval(this.calculationsA, 2000)
     this.intervalB = setInterval(this.calculationsB, 2000)
-    // console.log(setInterval(this.date, 2000))
+    // console.log(this.changesA, this.changesB)
   }
 }
 </script>
