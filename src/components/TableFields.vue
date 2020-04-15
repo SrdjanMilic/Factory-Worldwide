@@ -49,7 +49,6 @@ export default {
       startStopB: true,
       initialValueA: 3,
       initialValueB: 3,
-      // initialValue: 3,
       randomNumbersArray: [],
       randomSignA: '+',
       randomSignB: '+',
@@ -63,15 +62,27 @@ export default {
   },
   computed: {},
   methods: {
-    firstNumbersArray () { // first A, B numbers
-      for (let i = 0; i < 2; i++) {
-        const randomNumber = Number((Math.random() * 1 + 1).toFixed(2))
-        this.randomNumbersArray.push(randomNumber)
-      }
+    firstObjectA () {
+      const date = new Date()
+      const foA = {} // foA = first object A
+      foA.field = 'A'
+      foA.value = Number((Math.random() * 1 + 1).toFixed(2))
+      foA.time = date.toLocaleTimeString()
+      this.changesA.push(foA)
+      this.$emit('update:changesA', this.localChangesA)
     },
-    replaceNumbersArray () { // replace first A, B numbers
-      const n1 = Number((Math.random() * 1 + 1).toFixed(2))
-      const n2 = Number((Math.random() * 1 + 1).toFixed(2))
+    firstObjectB () {
+      const date = new Date()
+      const foB = {} // foA = first object A
+      foB.field = 'A'
+      foB.value = Number((Math.random() * 1 + 1).toFixed(2))
+      foB.time = date.toLocaleTimeString()
+      this.changesA.push(foB)
+      this.$emit('update:changesB', this.localChangesB)
+    },
+    replaceNumbersArray () { // replace random A, B numbers at time interval
+      const n1 = Number((Math.random() * 1 + 1).toFixed(2)) // n1 = first number
+      const n2 = Number((Math.random() * 1 + 1).toFixed(2)) // n2 = second number
       this.randomNumbersArray.splice(0, 2, n1, n2)
     },
     toggleIntervalA () {
@@ -122,8 +133,9 @@ export default {
     }
   },
   mounted () {
-    this.firstNumbersArray()
-    this.firstNumbersArray = setInterval(this.replaceNumbersArray, 2000)
+    setInterval(this.replaceNumbersArray, 2000)
+    this.firstObjectA()
+    this.firstObjectB()
     this.intervalA = setInterval(this.calculationsA, 2000)
     this.intervalB = setInterval(this.calculationsB, 2000)
     // console.log(this.changesA, this.changesB)
