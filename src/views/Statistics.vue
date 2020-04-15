@@ -19,8 +19,6 @@
 
 export default {
   name: 'Statistics',
-  components: {
-  },
   props: {
     changesA: {
       type: Array,
@@ -36,9 +34,7 @@ export default {
       fields: ['A', 'B'],
       changesArray: [this.changesA, this.changesB]
     }
-  },
-  methods: {},
-  mounted () {}
+  }
 }
 </script>
 
