@@ -3,28 +3,28 @@
     <table class="table-a">
       <tr>
         <th>A</th>
-        <td class="sign">{{ this.randomSignA }}</td>
-        <td>{{ initialValueA }}</td>
-        <td v-show="this.randomSignA == '+'">&#x2B06;</td>
-        <td v-show="this.randomSignA == '-'">&#x2B07;</td>
+        <td class="sign">{{ this.randomSign.A }}</td>
+        <td>{{ initialValue.A }}</td>
+        <td v-show="this.randomSign.A == '+'">&#x2B06;</td>
+        <td v-show="this.randomSign.A == '-'">&#x2B07;</td>
       </tr>
     </table>
-    <button @click="toggleIntervalA()">
-      <span v-show="this.startStopA === true">Stop</span>
-      <span v-show="this.startStopA === false">Start</span>
+    <button @click="toggleintervalA()">
+      <span v-show="this.startStop.A === true">Stop</span>
+      <span v-show="this.startStop.A === false">Start</span>
     </button>
     <table class="table-b">
       <tr>
         <th>B</th>
-        <td class="sign">{{ this.randomSignB }}</td>
-        <td>{{ initialValueB }}</td>
-        <td v-show="this.randomSignB == '+'">&#x2B06;</td>
-        <td v-show="this.randomSignB == '-'">&#x2B07;</td>
+        <td class="sign">{{ this.randomSign.B }}</td>
+        <td>{{ initialValue.B }}</td>
+        <td v-show="this.randomSign.B == '+'">&#x2B06;</td>
+        <td v-show="this.randomSign.B == '-'">&#x2B07;</td>
       </tr>
     </table>
-    <button @click="toggleIntervalB()">
-      <span v-show="this.startStopB === true">Stop</span>
-      <span v-show="this.startStopB === false">Start</span>
+    <button @click="toggleintervalB()">
+      <span v-show="this.startStop.B === true">Stop</span>
+      <span v-show="this.startStop.B === false">Start</span>
     </button>
   </div>
 </template>
@@ -44,20 +44,28 @@ export default {
   },
   data () {
     return {
-      // letters: ['A', 'B'],
-      startStopA: true,
-      startStopB: true,
-      initialValueA: 3,
-      initialValueB: 3,
+      startStop: {
+        A: true,
+        B: true
+      },
+      initialValue: {
+        A: 3,
+        B: 3
+      },
       randomNumbersArray: [],
-      randomSignA: '+',
-      randomSignB: '+',
-      // randomSign: '+',
+      randomSign: {
+        A: '+',
+        B: '+'
+      },
       signsArray: ['+', '-'],
-      intervalA: null,
-      intervalB: null,
-      localChangesA: [],
-      localChangesB: []
+      interval: {
+        A: null,
+        B: null
+      },
+      localChanges: {
+        A: [],
+        B: []
+      }
     }
   },
   computed: {},
@@ -69,7 +77,7 @@ export default {
       foA.value = Number((Math.random() * 1 + 1).toFixed(2))
       foA.time = date.toLocaleTimeString()
       this.changesA.push(foA)
-      this.$emit('update:changesA', this.localChangesA)
+      this.$emit('update:changesA', this.localChanges.A)
     },
     firstObjectB () {
       const date = new Date()
@@ -78,67 +86,69 @@ export default {
       foB.value = Number((Math.random() * 1 + 1).toFixed(2))
       foB.time = date.toLocaleTimeString()
       this.changesA.push(foB)
-      this.$emit('update:changesB', this.localChangesB)
+      this.$emit('update:changesB', this.localChanges.B)
     },
     replaceNumbersArray () { // replace random A, B numbers at time interval
       const n1 = Number((Math.random() * 1 + 1).toFixed(2)) // n1 = first number
       const n2 = Number((Math.random() * 1 + 1).toFixed(2)) // n2 = second number
       this.randomNumbersArray.splice(0, 2, n1, n2)
     },
-    toggleIntervalA () {
-      this.startStopA = !this.startStopA
-      if (this.startStopA) {
-        this.intervalA = setInterval(this.calculationsA, 2000)
+    toggleintervalA () {
+      this.startStop.A = !this.startStop.A
+      if (this.startStop.A) {
+        this.interval.A = setInterval(this.calculationsA, 2000)
       } else {
-        clearInterval(this.intervalA)
+        clearInterval(this.interval.A)
       }
     },
-    toggleIntervalB () {
-      this.startStopB = !this.startStopB
-      if (this.startStopB) {
-        this.intervalB = setInterval(this.calculationsB, 2000)
+    toggleintervalB () {
+      this.startStop.B = !this.startStop.B
+      if (this.startStop.B) {
+        this.interval.B = setInterval(this.calculationsB, 2000)
       } else {
-        clearInterval(this.intervalB)
+        clearInterval(this.interval.B)
       }
     },
     calculationsA () {
-      this.randomSignA = this.signsArray[
+      this.randomSign.A = this.signsArray[
         Math.floor(Math.random() * this.signsArray.length)
       ]
-      this.randomSignA === '+'
-        ? (this.initialValueA += this.randomNumbersArray[0])
-        : (this.initialValueA -= this.randomNumbersArray[0])
+      this.randomSign.A === '+'
+        ? (this.initialValue.A += this.randomNumbersArray[0])
+        : (this.initialValue.A -= this.randomNumbersArray[0])
       const date = new Date()
       const newChange = {}
       newChange.field = 'A'
       newChange.value = this.randomNumbersArray[0]
       newChange.time = date.toLocaleTimeString()
       this.changesA.push(newChange)
-      this.$emit('update:changesA', this.localChangesA)
+      this.$emit('update:changesA', this.localChanges.A)
     },
     calculationsB () {
-      this.randomSignB = this.signsArray[
+      this.randomSign.B = this.signsArray[
         Math.floor(Math.random() * this.signsArray.length)
       ]
-      this.randomSignB === '+'
-        ? (this.initialValueB += this.randomNumbersArray[1])
-        : (this.initialValueB -= this.randomNumbersArray[1])
+      this.randomSign.B === '+'
+        ? (this.initialValue.B += this.randomNumbersArray[1])
+        : (this.initialValue.B -= this.randomNumbersArray[1])
       const date = new Date()
       const newChange = {}
       newChange.field = 'B'
       newChange.value = this.randomNumbersArray[1]
       newChange.time = date.toLocaleTimeString()
       this.changesB.push(newChange)
-      this.$emit('update:changesB', this.localChangesB)
+      this.$emit('update:changesB', this.localChanges.B)
     }
   },
   mounted () {
     setInterval(this.replaceNumbersArray, 2000)
     this.firstObjectA()
     this.firstObjectB()
-    this.intervalA = setInterval(this.calculationsA, 2000)
-    this.intervalB = setInterval(this.calculationsB, 2000)
-    // console.log(this.changesA, this.changesB)
+    this.interval.A = setInterval(this.calculationsA, 2000)
+    this.interval.B = setInterval(this.calculationsB, 2000)
+
+    const values = Object.values(this.startStop)
+    console.log(values)
   }
 }
 </script>
