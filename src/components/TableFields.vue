@@ -10,8 +10,8 @@
       </tr>
     </table>
     <button @click="toggleintervalA()">
-      <span v-show="this.startStop.A === true">Stop</span>
-      <span v-show="this.startStop.A === false">Start</span>
+      <span v-show="this.startStop.A">Stop</span>
+      <span v-show="!this.startStop.A">Start</span>
     </button>
     <table class="table-b">
       <tr>
@@ -23,8 +23,8 @@
       </tr>
     </table>
     <button @click="toggleintervalB()">
-      <span v-show="this.startStop.B === true">Stop</span>
-      <span v-show="this.startStop.B === false">Start</span>
+      <span v-show="this.startStop.B">Stop</span>
+      <span v-show="!this.startStop.B">Start</span>
     </button>
   </div>
 </template>
