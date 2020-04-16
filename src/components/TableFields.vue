@@ -107,42 +107,44 @@ export default {
         }
       }
     },
-    calculationsA () {
-      this.randomSign.A = this.signsArray[
-        Math.floor(Math.random() * this.signsArray.length)
-      ]
-      this.randomSign.A === '+'
-        ? (this.initialValue.A += this.randomNumbersArray[0])
-        : (this.initialValue.A -= this.randomNumbersArray[0])
-      const date = new Date()
-      const newChange = {}
-      newChange.field = 'A'
-      newChange.value = this.randomNumbersArray[0]
-      newChange.time = date.toLocaleTimeString()
-      this.changesA.push(newChange)
-      this.$emit('update:changesA', this.localChanges.A)
-    },
-    calculationsB () {
-      this.randomSign.B = this.signsArray[
-        Math.floor(Math.random() * this.signsArray.length)
-      ]
-      this.randomSign.B === '+'
-        ? (this.initialValue.B += this.randomNumbersArray[1])
-        : (this.initialValue.B -= this.randomNumbersArray[1])
-      const date = new Date()
-      const newChange = {}
-      newChange.field = 'B'
-      newChange.value = this.randomNumbersArray[1]
-      newChange.time = date.toLocaleTimeString()
-      this.changesB.push(newChange)
-      this.$emit('update:changesB', this.localChanges.B)
+    calculations (field) {
+      if (field === 'A') {
+        this.randomSign.A = this.signsArray[
+          Math.floor(Math.random() * this.signsArray.length)
+        ]
+        this.randomSign.A === '+'
+          ? (this.initialValue.A += this.randomNumbersArray[0])
+          : (this.initialValue.A -= this.randomNumbersArray[0])
+        const date = new Date()
+        const newChange = {}
+        newChange.field = 'A'
+        newChange.value = this.randomNumbersArray[0]
+        newChange.time = date.toLocaleTimeString()
+        this.changesA.push(newChange)
+        this.$emit('update:changesA', this.localChanges.A)
+      }
+      if (field === 'B') {
+        this.randomSign.B = this.signsArray[
+          Math.floor(Math.random() * this.signsArray.length)
+        ]
+        this.randomSign.B === '+'
+          ? (this.initialValue.B += this.randomNumbersArray[1])
+          : (this.initialValue.B -= this.randomNumbersArray[1])
+        const date = new Date()
+        const newChange = {}
+        newChange.field = 'B'
+        newChange.value = this.randomNumbersArray[1]
+        newChange.time = date.toLocaleTimeString()
+        this.changesB.push(newChange)
+        this.$emit('update:changesB', this.localChanges.B)
+      }
     }
   },
   mounted () {
     this.firstObjects()
     setInterval(this.replaceNumbersArray, 2000)
-    this.interval.A = setInterval(this.calculationsA, 2000)
-    this.interval.B = setInterval(this.calculationsB, 2000)
+    this.interval.A = setInterval(() => { this.calculations('A') }, 2000)
+    this.interval.B = setInterval(() => { this.calculations('B') }, 2000)
   }
 }
 </script>
