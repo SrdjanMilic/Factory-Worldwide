@@ -93,7 +93,7 @@ export default {
       if (field === 'A') {
         this.startStop.A = !this.startStop.A
         if (this.startStop.A) {
-          this.interval.A = setInterval(this.calculationsA, 2000)
+          this.interval.A = setInterval(() => { this.calculations('A') }, 2000)
         } else {
           clearInterval(this.interval.A)
         }
@@ -101,7 +101,7 @@ export default {
       if (field === 'B') {
         this.startStop.B = !this.startStop.B
         if (this.startStop.B) {
-          this.interval.B = setInterval(this.calculationsB, 2000)
+          this.interval.B = setInterval(() => { this.calculations('B') }, 2000)
         } else {
           clearInterval(this.interval.B)
         }
