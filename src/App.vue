@@ -4,7 +4,9 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/statistics">Statistics</router-link>
     </div>
-    <router-view :changesA.sync="changesA" :changesB.sync="changesB" />
+    <keep-alive>
+      <router-view :changesA.sync="changesA" :changesB.sync="changesB" />
+    </keep-alive>
   </div>
 </template>
 
