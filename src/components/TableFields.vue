@@ -9,7 +9,7 @@
         <td v-show="this.randomSign.A == '-'">&#x2B07;</td>
       </tr>
     </table>
-    <button @click="toggleIntervalA()">
+    <button @click="toggleInterval('A')">
       <span v-show="this.startStop.A">Stop</span>
       <span v-show="!this.startStop.A">Start</span>
     </button>
@@ -22,7 +22,7 @@
         <td v-show="this.randomSign.B == '-'">&#x2B07;</td>
       </tr>
     </table>
-    <button @click="toggleIntervalB()">
+    <button @click="toggleInterval('B')">
       <span v-show="this.startStop.B">Stop</span>
       <span v-show="!this.startStop.B">Start</span>
     </button>
@@ -89,20 +89,22 @@ export default {
       const n2 = Number((Math.random() * 1 + 1).toFixed(2)) // n2 = second number (B)
       this.randomNumbersArray.splice(0, 2, n1, n2)
     },
-    toggleIntervalA () {
-      this.startStop.A = !this.startStop.A
-      if (this.startStop.A) {
-        this.interval.A = setInterval(this.calculationsA, 2000)
-      } else {
-        clearInterval(this.interval.A)
+    toggleInterval (field) {
+      if (field === 'A') {
+        this.startStop.A = !this.startStop.A
+        if (this.startStop.A) {
+          this.interval.A = setInterval(this.calculationsA, 2000)
+        } else {
+          clearInterval(this.interval.A)
+        }
       }
-    },
-    toggleIntervalB () {
-      this.startStop.B = !this.startStop.B
-      if (this.startStop.B) {
-        this.interval.B = setInterval(this.calculationsB, 2000)
-      } else {
-        clearInterval(this.interval.B)
+      if (field === 'B') {
+        this.startStop.B = !this.startStop.B
+        if (this.startStop.B) {
+          this.interval.B = setInterval(this.calculationsB, 2000)
+        } else {
+          clearInterval(this.interval.B)
+        }
       }
     },
     calculationsA () {
