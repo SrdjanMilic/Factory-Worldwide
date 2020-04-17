@@ -4,7 +4,7 @@
       <tr>
         <th>A</th>
         <td class="sign">{{ this.randomSign.A }}</td>
-        <td>{{ initialValue.A }}</td>
+        <td>{{ initialValueA }}</td>
         <td v-show="this.randomSign.A == '+'">&#x2B06;</td>
         <td v-show="this.randomSign.A == '-'">&#x2B07;</td>
       </tr>
@@ -17,7 +17,7 @@
       <tr>
         <th>B</th>
         <td class="sign">{{ this.randomSign.B }}</td>
-        <td>{{ initialValue.B }}</td>
+        <td>{{ initialValueB }}</td>
         <td v-show="this.randomSign.B == '+'">&#x2B06;</td>
         <td v-show="this.randomSign.B == '-'">&#x2B07;</td>
       </tr>
@@ -44,25 +44,21 @@ export default {
   },
   data () {
     return {
+      timerA: undefined,
+      timerB: undefined,
       fields: ['A', 'B'],
       startStop: {
         A: true,
         B: true
       },
-      initialValue: {
-        A: 3,
-        B: 3
-      },
+      initialValueA: 3,
+      initialValueB: 3,
       randomNumbersArray: [],
       randomSign: {
         A: '+',
         B: '+'
       },
       signsArray: ['+', '-'],
-      interval: {
-        A: null,
-        B: null
-      },
       localChanges: {
         A: [],
         B: []
@@ -71,39 +67,39 @@ export default {
   },
   computed: {},
   methods: {
-    firstObjects () {
+    firstObjects () { // create first objects A, B
       for (let i = 0; i < this.fields.length; i++) {
         const date = new Date()
         const obj = {}
         obj.field = this.fields[i]
         obj.value = Number((Math.random() * 1 + 1).toFixed(2))
         obj.time = date.toLocaleTimeString()
-        this.changesA.push(obj[0])
-        this.changesB.push(obj[1])
+        this.changesA.push(obj[i])
+        this.changesB.push(obj[i])
         this.$emit('update:changesA', this.localChanges.A)
         this.$emit('update:changesB', this.localChanges.B)
       }
     },
     replaceNumbersArray () { // replace random A, B numbers at time interval
-      const n1 = Number((Math.random() * 1 + 1).toFixed(2)) // n1 = first number (A)
-      const n2 = Number((Math.random() * 1 + 1).toFixed(2)) // n2 = second number (B)
-      this.randomNumbersArray.splice(0, 2, n1, n2)
+      const numberA = Number((Math.random() * 1 + 1).toFixed(2)) // first number A
+      const numberB = Number((Math.random() * 1 + 1).toFixed(2)) // first number B
+      this.randomNumbersArray.splice(0, 2, numberA, numberB)
     },
     toggleInterval (field) {
       if (field === 'A') {
         this.startStop.A = !this.startStop.A
         if (this.startStop.A) {
-          this.interval.A = setInterval(() => { this.calculations('A') }, 2000)
+          this.timerA = setInterval(() => { this.calculations('A') }, 2000)
         } else {
-          clearInterval(this.interval.A)
+          clearInterval(this.timerA)
         }
       }
       if (field === 'B') {
         this.startStop.B = !this.startStop.B
         if (this.startStop.B) {
-          this.interval.B = setInterval(() => { this.calculations('B') }, 2000)
+          this.timerB = setInterval(() => { this.calculations('B') }, 2000)
         } else {
-          clearInterval(this.interval.B)
+          clearInterval(this.timerB)
         }
       }
     },
@@ -113,8 +109,8 @@ export default {
           Math.floor(Math.random() * this.signsArray.length)
         ]
         this.randomSign.A === '+'
-          ? (this.initialValue.A += this.randomNumbersArray[0])
-          : (this.initialValue.A -= this.randomNumbersArray[0])
+          ? (this.initialValueA += this.randomNumbersArray[0])
+          : (this.initialValueA -= this.randomNumbersArray[0])
         const date = new Date()
         const newChange = {}
         newChange.field = 'A'
@@ -128,8 +124,8 @@ export default {
           Math.floor(Math.random() * this.signsArray.length)
         ]
         this.randomSign.B === '+'
-          ? (this.initialValue.B += this.randomNumbersArray[1])
-          : (this.initialValue.B -= this.randomNumbersArray[1])
+          ? (this.initialValueB += this.randomNumbersArray[1])
+          : (this.initialValueB -= this.randomNumbersArray[1])
         const date = new Date()
         const newChange = {}
         newChange.field = 'B'
@@ -143,8 +139,24 @@ export default {
   mounted () {
     this.firstObjects()
     setInterval(this.replaceNumbersArray, 2000)
-    this.interval.A = setInterval(() => { this.calculations('A') }, 2000)
-    this.interval.B = setInterval(() => { this.calculations('B') }, 2000)
+
+    this.initialValueA = this.$root.initialValueA || 3
+    this.timerA = setInterval(() => {
+      this.calculations('A')
+    }, 2000)
+
+    this.initialValueB = this.$root.initialValueB || 3
+    this.timerB = setInterval(() => {
+      this.calculations('B')
+    }, 2000)
+
+    console.log(this.randomNumbersArray)
+  },
+  beforeDestroy () {
+    this.$root.initialValueA = this.initialValueA
+    this.$root.initialValueB = this.initialValueB
+    clearInterval(this.timerA)
+    clearInterval(this.timerB)
   }
 }
 </script>

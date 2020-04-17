@@ -4,9 +4,7 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/statistics">Statistics</router-link>
     </div>
-    <keep-alive>
       <router-view :changesA.sync="changesA" :changesB.sync="changesB" />
-    </keep-alive>
   </div>
 </template>
 
@@ -18,6 +16,10 @@ export default {
       changesA: [],
       changesB: []
     }
+  },
+  mounted () {
+    console.log(this.changesA)
+    console.log(this.changesB)
   }
 }
 </script>

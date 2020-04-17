@@ -34,6 +34,12 @@ export default {
       fields: ['A', 'B'],
       changesArray: [this.changesA, this.changesB]
     }
+  },
+  mounted () {
+    // this.changesArray = this.$root.changesArray
+  },
+  beforeDestroy () {
+    // this.$root.changesArray = this.changesArray
   }
 }
 </script>
