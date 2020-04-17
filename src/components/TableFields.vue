@@ -1,20 +1,31 @@
 <template>
   <div>
-    <div class="fields" v-for="(field, index) in fields" :key="index">
-      <table>
-        <tr>
-          <th>{{ field }}</th>
-          <td class="sign">{{ Object.values(randomSign)[index] }}</td>
-          <td>{{ Object.values(initialValue)[index] }}</td>
-          <td v-show="Object.values(randomSign)[index] == '+'">&#x2B06;</td>
-          <td v-show="Object.values(randomSign)[index] == '-'">&#x2B07;</td>
-        </tr>
-      </table>
-      <button @click="toggleInterval(field)">
-        <span v-show="Object.values(startStop)[index]">Stop</span>
-        <span v-show="!Object.values(startStop)[index]">Start</span>
-      </button>
-    </div>
+    <table>
+      <tr>
+        <th>A</th>
+        <td class="sign">{{ this.randomSign.A }}</td>
+        <td>{{ initialValue.A }}</td>
+        <td v-show="this.randomSign.A == '+'">&#x2B06;</td>
+        <td v-show="this.randomSign.A == '-'">&#x2B07;</td>
+      </tr>
+    </table>
+    <button @click="toggleInterval('A')">
+      <span v-show="this.startStop.A">Stop</span>
+      <span v-show="!this.startStop.A">Start</span>
+    </button>
+    <table>
+      <tr>
+        <th>B</th>
+        <td class="sign">{{ this.randomSign.B }}</td>
+        <td>{{ initialValue.B }}</td>
+        <td v-show="this.randomSign.B == '+'">&#x2B06;</td>
+        <td v-show="this.randomSign.B == '-'">&#x2B07;</td>
+      </tr>
+    </table>
+    <button @click="toggleInterval('B')">
+      <span v-show="this.startStop.B">Stop</span>
+      <span v-show="!this.startStop.B">Start</span>
+    </button>
   </div>
 </template>
 
@@ -139,7 +150,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.fields {
+button {
   margin-bottom: 15px;
   &:last-child {
     margin-bottom: 0;
