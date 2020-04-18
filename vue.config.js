@@ -18,6 +18,7 @@ module.exports = {
   css: {
     loaderOptions: {
       sass: {
+        // eslint-disable-next-line
         prependData: `@import "@/assets/styles/main.scss";`
       }
     }
