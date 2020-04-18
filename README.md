@@ -1,4 +1,4 @@
-# Table statistics
+# Factory Worldwide
 
 ## Project setup
 ```
