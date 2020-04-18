@@ -67,7 +67,7 @@ export default {
   },
   computed: {},
   methods: {
-    firstObjects () { // create first objects A, B
+    firstObjects () { // creates first objects A, B
       for (let i = 0; i < this.fields.length; i++) {
         const date = new Date()
         const obj = {}
@@ -85,7 +85,7 @@ export default {
       const numberB = Number((Math.random() * 1 + 1).toFixed(2)) // first number B
       this.randomNumbersArray.splice(0, 2, numberA, numberB)
     },
-    toggleInterval (field) {
+    toggleInterval (field) { // button toggle
       if (field === 'A') {
         this.startStop.A = !this.startStop.A
         if (this.startStop.A) {
@@ -149,8 +149,6 @@ export default {
     this.timerB = setInterval(() => {
       this.calculations('B')
     }, 2000)
-
-    console.log(this.randomNumbersArray)
   },
   beforeDestroy () {
     this.$root.initialValueA = this.initialValueA
