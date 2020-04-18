@@ -22,7 +22,3 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
-
-**Downfalls**  
-0.1 + 0.2 floating point (decimal) calculations not fixed
-
