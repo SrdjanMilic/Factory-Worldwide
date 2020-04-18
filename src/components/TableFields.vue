@@ -58,11 +58,7 @@ export default {
         A: '+',
         B: '+'
       },
-      signsArray: ['+', '-'],
-      localChanges: {
-        A: [],
-        B: []
-      }
+      signsArray: ['+', '-']
     }
   },
   computed: {},
@@ -74,10 +70,10 @@ export default {
         obj.field = this.fields[i]
         obj.value = Number((Math.random() * 1 + 1).toFixed(2))
         obj.time = date.toLocaleTimeString()
-        this.changesA.push(obj[i])
-        this.changesB.push(obj[i])
-        this.$emit('update:changesA', this.localChanges.A)
-        this.$emit('update:changesB', this.localChanges.B)
+        this.changesA.push({ ...obj })
+        this.changesB.push({ ...obj })
+        this.$emit('update:changesA', [...this.changesA])
+        this.$emit('update:changesB', [...this.changesB])
       }
     },
     replaceNumbersArray () { // replace random A, B numbers at time interval
@@ -117,7 +113,7 @@ export default {
         newChange.value = this.randomNumbersArray[0]
         newChange.time = date.toLocaleTimeString()
         this.changesA.push(newChange)
-        this.$emit('update:changesA', this.localChanges.A)
+        this.$emit('update:changesA', [...this.changesA])
       }
       if (field === 'B') {
         this.randomSign.B = this.signsArray[
@@ -132,12 +128,14 @@ export default {
         newChange.value = this.randomNumbersArray[1]
         newChange.time = date.toLocaleTimeString()
         this.changesB.push(newChange)
-        this.$emit('update:changesB', this.localChanges.B)
+        this.$emit('update:changesB', [...this.changesB])
       }
     }
   },
   mounted () {
-    this.firstObjects()
+    if (this.changesA && this.changesB === []) {
+      this.firstObjects()
+    }
     setInterval(this.replaceNumbersArray, 2000)
 
     this.initialValueA = this.$root.initialValueA || 3
