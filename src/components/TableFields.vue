@@ -4,7 +4,7 @@
       <tr>
         <th>A</th>
         <td class="sign">{{ this.randomSign.A }}</td>
-        <td>{{ initialValueA }}</td>
+        <td>{{ valueA }}</td>
         <td v-show="this.randomSign.A == '+'">&#x2B06;</td>
         <td v-show="this.randomSign.A == '-'">&#x2B07;</td>
       </tr>
@@ -17,7 +17,7 @@
       <tr>
         <th>B</th>
         <td class="sign">{{ this.randomSign.B }}</td>
-        <td>{{ initialValueB }}</td>
+        <td>{{ valueB }}</td>
         <td v-show="this.randomSign.B == '+'">&#x2B06;</td>
         <td v-show="this.randomSign.B == '-'">&#x2B07;</td>
       </tr>
@@ -61,9 +61,17 @@ export default {
       signsArray: ['+', '-']
     }
   },
-  computed: {},
+  computed: {
+    valueA () {
+      return this.initialValueA.toFixed(2)
+    },
+    valueB () {
+      return this.initialValueB.toFixed(2)
+    }
+  },
   methods: {
-    firstObjects () { // creates first objects A, B
+    firstObjects () {
+      // creates first objects A, B
       for (let i = 0; i < this.fields.length; i++) {
         const date = new Date()
         const obj = {}
@@ -76,16 +84,20 @@ export default {
         this.$emit('update:changesB', [...this.changesB])
       }
     },
-    replaceNumbersArray () { // replace random A, B numbers at time interval
+    replaceNumbersArray () {
+      // replace random A, B numbers at time interval
       const numberA = Number((Math.random() * 1 + 1).toFixed(2)) // first number A
       const numberB = Number((Math.random() * 1 + 1).toFixed(2)) // first number B
       this.randomNumbersArray.splice(0, 2, numberA, numberB)
     },
-    toggleInterval (field) { // button toggle
+    toggleInterval (field) {
+      // button toggle
       if (field === 'A') {
         this.startStop.A = !this.startStop.A
         if (this.startStop.A) {
-          this.timerA = setInterval(() => { this.calculations('A') }, 2000)
+          this.timerA = setInterval(() => {
+            this.calculations('A')
+          }, 2000)
         } else {
           clearInterval(this.timerA)
         }
@@ -93,7 +105,9 @@ export default {
       if (field === 'B') {
         this.startStop.B = !this.startStop.B
         if (this.startStop.B) {
-          this.timerB = setInterval(() => { this.calculations('B') }, 2000)
+          this.timerB = setInterval(() => {
+            this.calculations('B')
+          }, 2000)
         } else {
           clearInterval(this.timerB)
         }
