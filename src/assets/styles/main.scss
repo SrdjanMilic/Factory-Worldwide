@@ -1,13 +1,17 @@
-table,
-th,
-td {
-  border: 1px solid rgb(179, 179, 179);
-  border-collapse: collapse;
-}
+body {
+  color: #505050;
 
-th,
-td {
-  padding: 5px;
-  text-align: left;
-  vertical-align: initial;
+  table,
+  th,
+  td {
+    border: 1px solid #bebebe;
+    border-collapse: collapse;
+  }
+
+  th,
+  td {
+    padding: 5px;
+    text-align: left;
+    vertical-align: initial;
+  }
 }
