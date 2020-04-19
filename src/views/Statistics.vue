@@ -17,7 +17,7 @@
 
 <script>
 export default {
-  name: 'Statistics',
+  name: "Statistics",
   props: {
     changesA: {
       type: Array,
@@ -32,14 +32,10 @@ export default {
       required: true
     }
   },
-  data () {
+  data() {
     return {
-      fields: ['A', 'B', 'C'],
-      changesArray: [
-        this.changesA,
-        this.changesB,
-        this.changesC
-      ]
+      fields: ["A", "B", "C"],
+      changesArray: [this.changesA, this.changesB, this.changesC]
     };
   }
 };
@@ -56,6 +52,12 @@ table {
   }
   tr:first-child {
     background-color: #f2f2f2;
+  }
+
+  th {
+    background-color: #42b983;
+    border-color: #42b983;
+    color: #ffffff;
   }
 }
 </style>

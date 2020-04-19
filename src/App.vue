@@ -4,18 +4,14 @@
       <router-link to="/">Home</router-link>&nbsp;|
       <router-link to="/statistics">Statistics</router-link>
     </div>
-    <router-view
-      :changesA.sync="changesA"
-      :changesB.sync="changesB"
-      :changesC.sync="changesC"
-    />
+    <router-view :changesA.sync="changesA" :changesB.sync="changesB" :changesC.sync="changesC" />
   </div>
 </template>
 
 <script>
 export default {
-  name: 'App',
-  data () {
+  name: "App",
+  data() {
     return {
       changesA: [],
       changesB: [],
