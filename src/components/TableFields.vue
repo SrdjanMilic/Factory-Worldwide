@@ -9,7 +9,7 @@
         <td v-show="this.randomSign.A == '-'">&#x2B07;</td>
       </tr>
     </table>
-    <button @click="toggleInterval('A')">
+    <button @click="toggleInterval('A')" :class="[startStop.A ? 'button-start' : 'button-stop']">
       <span v-show="this.startStop.A">Stop</span>
       <span v-show="!this.startStop.A">Start</span>
     </button>
@@ -22,7 +22,7 @@
         <td v-show="this.randomSign.B == '-'">&#x2B07;</td>
       </tr>
     </table>
-    <button @click="toggleInterval('B')">
+    <button @click="toggleInterval('B')" :class="[startStop.B ? 'button-start' : 'button-stop']">
       <span v-show="this.startStop.B">Stop</span>
       <span v-show="!this.startStop.B">Start</span>
     </button>
@@ -35,7 +35,7 @@
         <td v-show="this.randomSign.C == '-'">&#x2B07;</td>
       </tr>
     </table>
-    <button @click="toggleInterval('C')">
+    <button @click="toggleInterval('C')" :class="[startStop.C ? 'button-start' : 'button-stop']">
       <span v-show="this.startStop.C">Stop</span>
       <span v-show="!this.startStop.C">Start</span>
     </button>
@@ -44,7 +44,7 @@
 
 <script>
 export default {
-  name: 'TableFields',
+  name: "TableFields",
   props: {
     changesA: {
       type: Array,
@@ -59,12 +59,13 @@ export default {
       required: false
     }
   },
-  data () {
+  data() {
     return {
+      isActive: true,
       timerA: undefined,
       timerB: undefined,
       timerC: undefined,
-      fields: ['A', 'B', 'C'],
+      fields: ["A", "B", "C"],
       startStop: {
         A: true,
         B: true,
@@ -75,26 +76,26 @@ export default {
       initialValueC: 3,
       randomNumbersArray: [],
       randomSign: {
-        A: '+',
-        B: '+',
-        C: '+'
+        A: "+",
+        B: "+",
+        C: "+"
       },
-      signsArray: ['+', '-']
+      signsArray: ["+", "-"]
     };
   },
   computed: {
-    valueA () {
+    valueA() {
       return this.initialValueA.toFixed(2);
     },
-    valueB () {
+    valueB() {
       return this.initialValueB.toFixed(2);
     },
-    valueC () {
+    valueC() {
       return this.initialValueC.toFixed(2);
     }
   },
   methods: {
-    firstObjects () {
+    firstObjects() {
       // creates first objects A, B
       for (let i = 0; i < this.fields.length; i++) {
         const date = new Date();
@@ -105,100 +106,100 @@ export default {
         this.changesA.push({ ...obj });
         this.changesB.push({ ...obj });
         this.changesC.push({ ...obj });
-        this.$emit('update:changesA', [...this.changesA]);
-        this.$emit('update:changesB', [...this.changesB]);
-        this.$emit('update:changesC', [...this.changesC]);
+        this.$emit("update:changesA", [...this.changesA]);
+        this.$emit("update:changesB", [...this.changesB]);
+        this.$emit("update:changesC", [...this.changesC]);
       }
     },
-    replaceNumbersArray () {
+    replaceNumbersArray() {
       // replace random A, B numbers at time interval
       const numberA = Number((Math.random() * 1 + 1).toFixed(2)); // first number A
       const numberB = Number((Math.random() * 1 + 1).toFixed(2)); // first number B
       const numberC = Number((Math.random() * 1 + 1).toFixed(2)); // first number B
       this.randomNumbersArray.splice(0, 3, numberA, numberB, numberC);
     },
-    toggleInterval (field) {
+    toggleInterval(field) {
       // button toggle
-      if (field === 'A') {
+      if (field === "A") {
         this.startStop.A = !this.startStop.A;
         if (this.startStop.A) {
           this.timerA = setInterval(() => {
-            this.calculations('A');
+            this.calculations("A");
           }, 2000);
         } else {
           clearInterval(this.timerA);
         }
       }
-      if (field === 'B') {
+      if (field === "B") {
         this.startStop.B = !this.startStop.B;
         if (this.startStop.B) {
           this.timerB = setInterval(() => {
-            this.calculations('B');
+            this.calculations("B");
           }, 2000);
         } else {
           clearInterval(this.timerB);
         }
       }
-      if (field === 'C') {
+      if (field === "C") {
         this.startStop.C = !this.startStop.C;
         if (this.startStop.C) {
           this.timerC = setInterval(() => {
-            this.calculations('C');
+            this.calculations("C");
           }, 2000);
         } else {
           clearInterval(this.timerC);
         }
       }
     },
-    calculations (field) {
-      if (field === 'A') {
+    calculations(field) {
+      if (field === "A") {
         this.randomSign.A = this.signsArray[
           Math.floor(Math.random() * this.signsArray.length)
         ];
-        this.randomSign.A === '+'
+        this.randomSign.A === "+"
           ? (this.initialValueA += this.randomNumbersArray[0])
           : (this.initialValueA -= this.randomNumbersArray[0]);
         const date = new Date();
         const newChange = {};
-        newChange.field = 'A';
+        newChange.field = "A";
         newChange.value = this.randomNumbersArray[0];
         newChange.time = date.toLocaleTimeString();
         this.changesA.push(newChange);
-        this.$emit('update:changesA', [...this.changesA]);
+        this.$emit("update:changesA", [...this.changesA]);
       }
-      if (field === 'B') {
+      if (field === "B") {
         this.randomSign.B = this.signsArray[
           Math.floor(Math.random() * this.signsArray.length)
         ];
-        this.randomSign.B === '+'
+        this.randomSign.B === "+"
           ? (this.initialValueB += this.randomNumbersArray[1])
           : (this.initialValueB -= this.randomNumbersArray[1]);
         const date = new Date();
         const newChange = {};
-        newChange.field = 'B';
+        newChange.field = "B";
         newChange.value = this.randomNumbersArray[1];
         newChange.time = date.toLocaleTimeString();
         this.changesB.push(newChange);
-        this.$emit('update:changesB', [...this.changesB]);
+        this.$emit("update:changesB", [...this.changesB]);
       }
-      if (field === 'C') {
+      if (field === "C") {
         this.randomSign.C = this.signsArray[
           Math.floor(Math.random() * this.signsArray.length)
         ];
-        this.randomSign.C === '+'
+        this.randomSign.C === "+"
           ? (this.initialValueC += this.randomNumbersArray[2])
           : (this.initialValueC -= this.randomNumbersArray[2]);
         const date = new Date();
         const newChange = {};
-        newChange.field = 'C';
+        newChange.field = "C";
         newChange.value = this.randomNumbersArray[2];
         newChange.time = date.toLocaleTimeString();
         this.changesC.push(newChange);
-        this.$emit('update:changesC', [...this.changesC]);
+        this.$emit("update:changesC", [...this.changesC]);
       }
     }
   },
-  mounted () {
+  mounted() {
     if (this.changesA && this.changesB && this.changesC === []) {
       this.firstObjects();
     }
@@ -206,20 +207,20 @@ export default {
 
     this.initialValueA = this.$root.initialValueA || 3;
     this.timerA = setInterval(() => {
-      this.calculations('A');
+      this.calculations("A");
     }, 2000);
 
     this.initialValueB = this.$root.initialValueB || 3;
     this.timerB = setInterval(() => {
-      this.calculations('B');
+      this.calculations("B");
     }, 2000);
 
     this.initialValueC = this.$root.initialValueC || 3;
     this.timerC = setInterval(() => {
-      this.calculations('C');
+      this.calculations("C");
     }, 2000);
   },
-  beforeDestroy () {
+  beforeDestroy() {
     this.$root.initialValueA = this.initialValueA;
     this.$root.initialValueB = this.initialValueB;
     this.$root.initialValueC = this.initialValueC;
@@ -236,22 +237,27 @@ button {
   &:last-child {
     margin-bottom: 0;
   }
-}
-.sign {
-  width: 12px;
-  text-align: center;
-}
-button {
   border: 1px solid transparent;
   border-radius: 0;
   background-color: #42b983;
   color: #ffffff;
   margin-top: 7px;
   padding: 5px 10px;
+  font-weight: bold;
 
   &:hover {
     opacity: 0.9;
     cursor: pointer;
   }
+}
+.button-stop {
+  background-color: #e95959;
+}
+.button-start {
+  background-color: #42b983;
+}
+.sign {
+  width: 12px;
+  text-align: center;
 }
 </style>
