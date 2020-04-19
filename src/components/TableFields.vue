@@ -3,10 +3,10 @@
     <table>
       <tr>
         <th>A</th>
-        <td class="sign">{{ this.randomSign.A }}</td>
+        <td class="sign">{{ this.randomSign[0] }}</td>
         <td>{{ valueA }}</td>
-        <td v-show="this.randomSign.A == '+'">&#x2B06;</td>
-        <td v-show="this.randomSign.A == '-'">&#x2B07;</td>
+        <td v-show="this.randomSign[0] == '+'">&#x2B06;</td>
+        <td v-show="this.randomSign[0] == '-'">&#x2B07;</td>
       </tr>
     </table>
     <button @click="toggleInterval('A')" :class="[startStopA ? 'button-start' : 'button-stop']">
@@ -16,10 +16,10 @@
     <table>
       <tr>
         <th>B</th>
-        <td class="sign">{{ this.randomSign.B }}</td>
+        <td class="sign">{{ this.randomSign[1] }}</td>
         <td>{{ valueB }}</td>
-        <td v-show="this.randomSign.B == '+'">&#x2B06;</td>
-        <td v-show="this.randomSign.B == '-'">&#x2B07;</td>
+        <td v-show="this.randomSign[1] == '+'">&#x2B06;</td>
+        <td v-show="this.randomSign[1] == '-'">&#x2B07;</td>
       </tr>
     </table>
     <button @click="toggleInterval('B')" :class="[startStopB ? 'button-start' : 'button-stop']">
@@ -29,10 +29,10 @@
     <table>
       <tr>
         <th>C</th>
-        <td class="sign">{{ this.randomSign.C }}</td>
+        <td class="sign">{{ this.randomSign[2] }}</td>
         <td>{{ valueC }}</td>
-        <td v-show="this.randomSign.C == '+'">&#x2B06;</td>
-        <td v-show="this.randomSign.C == '-'">&#x2B07;</td>
+        <td v-show="this.randomSign[2] == '+'">&#x2B06;</td>
+        <td v-show="this.randomSign[2] == '-'">&#x2B07;</td>
       </tr>
     </table>
     <button @click="toggleInterval('C')" :class="[startStopC ? 'button-start' : 'button-stop']">
@@ -61,9 +61,7 @@ export default {
   },
   data() {
     return {
-      timerA: undefined,
-      timerB: undefined,
-      timerC: undefined,
+      timer: [undefined, undefined, undefined],
       fields: ["A", "B", "C"],
       startStopA: true,
       startStopB: true,
@@ -72,11 +70,7 @@ export default {
       initialValueB: 3,
       initialValueC: 3,
       randomNumbersArray: [],
-      randomSign: {
-        A: "+",
-        B: "+",
-        C: "+"
-      },
+      randomSign: ["+", "+", "+"],
       signsArray: ["+", "-"]
     };
   },
@@ -93,7 +87,7 @@ export default {
   },
   methods: {
     firstObjects() {
-      // creates first objects A, B
+      // creates first objects A, B, C...
       for (let i = 0; i < this.fields.length; i++) {
         const date = new Date();
         const obj = {};
@@ -112,7 +106,7 @@ export default {
       // replace random A, B numbers at time interval
       const numberA = Number((Math.random() * 1 + 1).toFixed(2)); // first number A
       const numberB = Number((Math.random() * 1 + 1).toFixed(2)); // first number B
-      const numberC = Number((Math.random() * 1 + 1).toFixed(2)); // first number B
+      const numberC = Number((Math.random() * 1 + 1).toFixed(2)); // first number C
       this.randomNumbersArray.splice(0, 3, numberA, numberB, numberC);
     },
     toggleInterval(field) {
@@ -120,40 +114,40 @@ export default {
       if (field === "A") {
         this.startStopA = !this.startStopA;
         if (this.startStopA) {
-          this.timerA = setInterval(() => {
+          this.timer[0] = setInterval(() => {
             this.calculations("A");
           }, 2000);
         } else {
-          clearInterval(this.timerA);
+          clearInterval(this.timer[0]);
         }
       }
       if (field === "B") {
         this.startStopB = !this.startStopB;
         if (this.startStopB) {
-          this.timerB = setInterval(() => {
+          this.timer[1] = setInterval(() => {
             this.calculations("B");
           }, 2000);
         } else {
-          clearInterval(this.timerB);
+          clearInterval(this.timer[1]);
         }
       }
       if (field === "C") {
         this.startStopC = !this.startStopC;
         if (this.startStopC) {
-          this.timerC = setInterval(() => {
+          this.timer[2] = setInterval(() => {
             this.calculations("C");
           }, 2000);
         } else {
-          clearInterval(this.timerC);
+          clearInterval(this.timer[2]);
         }
       }
     },
     calculations(field) {
       if (field === "A") {
-        this.randomSign.A = this.signsArray[
+        this.randomSign[0] = this.signsArray[
           Math.floor(Math.random() * this.signsArray.length)
         ];
-        this.randomSign.A === "+"
+        this.randomSign[0] === "+"
           ? (this.initialValueA += this.randomNumbersArray[0])
           : (this.initialValueA -= this.randomNumbersArray[0]);
         const date = new Date();
@@ -165,10 +159,10 @@ export default {
         this.$emit("update:changesA", [...this.changesA]);
       }
       if (field === "B") {
-        this.randomSign.B = this.signsArray[
+        this.randomSign[1] = this.signsArray[
           Math.floor(Math.random() * this.signsArray.length)
         ];
-        this.randomSign.B === "+"
+        this.randomSign[1] === "+"
           ? (this.initialValueB += this.randomNumbersArray[1])
           : (this.initialValueB -= this.randomNumbersArray[1]);
         const date = new Date();
@@ -180,10 +174,10 @@ export default {
         this.$emit("update:changesB", [...this.changesB]);
       }
       if (field === "C") {
-        this.randomSign.C = this.signsArray[
+        this.randomSign[2] = this.signsArray[
           Math.floor(Math.random() * this.signsArray.length)
         ];
-        this.randomSign.C === "+"
+        this.randomSign[2] === "+"
           ? (this.initialValueC += this.randomNumbersArray[2])
           : (this.initialValueC -= this.randomNumbersArray[2]);
         const date = new Date();
@@ -198,13 +192,13 @@ export default {
   },
   beforeUpdate() {
     if (!this.startStopA) {
-      clearInterval(this.timerA);
+      clearInterval(this.timer[0]);
     }
     if (!this.startStopB) {
-      clearInterval(this.timerB);
+      clearInterval(this.timer[1]);
     }
     if (!this.startStopC) {
-      clearInterval(this.timerC);
+      clearInterval(this.timer[2]);
     }
   },
   mounted() {
@@ -214,17 +208,17 @@ export default {
     setInterval(this.replaceNumbersArray, 2000);
 
     this.initialValueA = this.$root.initialValueA || 3;
-    this.timerA = setInterval(() => {
+    this.timer[0] = setInterval(() => {
       this.calculations("A");
     }, 2000);
 
     this.initialValueB = this.$root.initialValueB || 3;
-    this.timerB = setInterval(() => {
+    this.timer[1] = setInterval(() => {
       this.calculations("B");
     }, 2000);
 
     this.initialValueC = this.$root.initialValueC || 3;
-    this.timerC = setInterval(() => {
+    this.timer[2] = setInterval(() => {
       this.calculations("C");
     }, 2000);
 
@@ -239,9 +233,9 @@ export default {
     this.$root.startStopA = !this.startStopA;
     this.$root.startStopB = !this.startStopB;
     this.$root.startStopC = !this.startStopC;
-    clearInterval(this.timerA);
-    clearInterval(this.timerB);
-    clearInterval(this.timerC);
+    clearInterval(this.timer[0]);
+    clearInterval(this.timer[1]);
+    clearInterval(this.timer[2]);
   }
 };
 </script>
