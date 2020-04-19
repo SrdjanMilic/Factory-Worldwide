@@ -89,10 +89,13 @@ export default {
     firstObjects() {
       // creates first objects A, B, C...
       for (let i = 0; i < this.fields.length; i++) {
-        const date = new Date();
         const obj = {};
+        const date = new Date();
         obj.field = this.fields[i];
         obj.value = Number((Math.random() * 1 + 1).toFixed(2));
+        obj.indicator = this.signsArray[
+          Math.floor(Math.random() * this.signsArray.length)
+        ];
         obj.time = date.toLocaleTimeString();
         this.changesA.push({ ...obj });
         this.changesB.push({ ...obj });
@@ -153,6 +156,7 @@ export default {
         const date = new Date();
         const newChange = {};
         newChange.field = "A";
+        newChange.indicator = this.randomSign[0];
         newChange.value = this.randomNumbersArray[0];
         newChange.time = date.toLocaleTimeString();
         this.changesA.push(newChange);
@@ -168,6 +172,7 @@ export default {
         const date = new Date();
         const newChange = {};
         newChange.field = "B";
+        newChange.indicator = this.randomSign[1];
         newChange.value = this.randomNumbersArray[1];
         newChange.time = date.toLocaleTimeString();
         this.changesB.push(newChange);
@@ -183,6 +188,7 @@ export default {
         const date = new Date();
         const newChange = {};
         newChange.field = "C";
+        newChange.indicator = this.randomSign[0];
         newChange.value = this.randomNumbersArray[2];
         newChange.time = date.toLocaleTimeString();
         this.changesC.push(newChange);

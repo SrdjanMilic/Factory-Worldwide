@@ -4,11 +4,14 @@
       <tr>
         <th>Field</th>
         <th>Value</th>
+        <th>+/-</th>
         <th>Time</th>
       </tr>
       <tr v-for="(change, index) in changesArray[index]" :key="index">
         <td>{{ change.field }}</td>
         <td>{{ change.value }}</td>
+        <td v-show="change.indicator == '+'">&#x2B06;</td>
+        <td v-show="change.indicator == '-'">&#x2B07;</td>
         <td>{{ change.time }}</td>
       </tr>
     </table>
@@ -58,6 +61,7 @@ table {
     background-color: #42b983;
     border-color: #42b983;
     color: #ffffff;
+    text-align: center;
   }
 }
 </style>
