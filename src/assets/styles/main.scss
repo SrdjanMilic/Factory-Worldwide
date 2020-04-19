@@ -10,8 +10,10 @@ body {
 
   th,
   td {
-    padding: 5px;
-    text-align: left;
+    padding: 6px 12px;
     vertical-align: initial;
+    &:first-child {
+      text-align: center;
+    }
   }
 }
