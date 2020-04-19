@@ -1,10 +1,14 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link>|
+      <router-link to="/">Home</router-link>&nbsp;|
       <router-link to="/statistics">Statistics</router-link>
     </div>
-    <router-view :changesA.sync="changesA" :changesB.sync="changesB" />
+    <router-view
+      :changesA.sync="changesA"
+      :changesB.sync="changesB"
+      :changesC.sync="changesC"
+    />
   </div>
 </template>
 
@@ -14,10 +18,11 @@ export default {
   data () {
     return {
       changesA: [],
-      changesB: []
-    }
+      changesB: [],
+      changesC: []
+    };
   }
-}
+};
 </script>
 
 <style lang="scss">

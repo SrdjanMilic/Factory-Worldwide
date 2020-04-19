@@ -26,22 +26,36 @@ export default {
     changesB: {
       type: Array,
       required: true
+    },
+    changesC: {
+      type: Array,
+      required: true
     }
   },
   data () {
     return {
-      fields: ['A', 'B'],
-      changesArray: [this.changesA, this.changesB]
-    }
+      fields: ['A', 'B', 'C'],
+      changesArray: [
+        this.changesA,
+        this.changesB,
+        this.changesC
+      ]
+    };
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
 .statistics {
   display: flex;
 }
-table:first-of-type {
-  margin-right: 20px;
+table {
+  margin-right: 30px;
+  &:last-child {
+    margin: 0;
+  }
+  tr:first-child {
+    background-color: #f2f2f2;
+  }
 }
 </style>
