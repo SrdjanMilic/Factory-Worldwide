@@ -9,9 +9,9 @@
         <td v-show="this.randomSign.A == '-'">&#x2B07;</td>
       </tr>
     </table>
-    <button @click="toggleInterval('A')" :class="[startStop.A ? 'button-start' : 'button-stop']">
-      <span v-show="this.startStop.A">Stop</span>
-      <span v-show="!this.startStop.A">Start</span>
+    <button @click="toggleInterval('A')" :class="[startStopA ? 'button-start' : 'button-stop']">
+      <span v-show="this.startStopA">Stop</span>
+      <span v-show="!this.startStopA">Start</span>
     </button>
     <table>
       <tr>
@@ -22,9 +22,9 @@
         <td v-show="this.randomSign.B == '-'">&#x2B07;</td>
       </tr>
     </table>
-    <button @click="toggleInterval('B')" :class="[startStop.B ? 'button-start' : 'button-stop']">
-      <span v-show="this.startStop.B">Stop</span>
-      <span v-show="!this.startStop.B">Start</span>
+    <button @click="toggleInterval('B')" :class="[startStopB ? 'button-start' : 'button-stop']">
+      <span v-show="this.startStopB">Stop</span>
+      <span v-show="!this.startStopB">Start</span>
     </button>
     <table>
       <tr>
@@ -35,9 +35,9 @@
         <td v-show="this.randomSign.C == '-'">&#x2B07;</td>
       </tr>
     </table>
-    <button @click="toggleInterval('C')" :class="[startStop.C ? 'button-start' : 'button-stop']">
-      <span v-show="this.startStop.C">Stop</span>
-      <span v-show="!this.startStop.C">Start</span>
+    <button @click="toggleInterval('C')" :class="[startStopC ? 'button-start' : 'button-stop']">
+      <span v-show="this.startStopC">Stop</span>
+      <span v-show="!this.startStopC">Start</span>
     </button>
   </div>
 </template>
@@ -61,16 +61,13 @@ export default {
   },
   data() {
     return {
-      isActive: true,
       timerA: undefined,
       timerB: undefined,
       timerC: undefined,
       fields: ["A", "B", "C"],
-      startStop: {
-        A: true,
-        B: true,
-        C: true
-      },
+      startStopA: true,
+      startStopB: true,
+      startStopC: true,
       initialValueA: 3,
       initialValueB: 3,
       initialValueC: 3,
@@ -121,8 +118,8 @@ export default {
     toggleInterval(field) {
       // button toggle
       if (field === "A") {
-        this.startStop.A = !this.startStop.A;
-        if (this.startStop.A) {
+        this.startStopA = !this.startStopA;
+        if (this.startStopA) {
           this.timerA = setInterval(() => {
             this.calculations("A");
           }, 2000);
@@ -131,8 +128,8 @@ export default {
         }
       }
       if (field === "B") {
-        this.startStop.B = !this.startStop.B;
-        if (this.startStop.B) {
+        this.startStopB = !this.startStopB;
+        if (this.startStopB) {
           this.timerB = setInterval(() => {
             this.calculations("B");
           }, 2000);
@@ -141,8 +138,8 @@ export default {
         }
       }
       if (field === "C") {
-        this.startStop.C = !this.startStop.C;
-        if (this.startStop.C) {
+        this.startStopC = !this.startStopC;
+        if (this.startStopC) {
           this.timerC = setInterval(() => {
             this.calculations("C");
           }, 2000);
@@ -199,6 +196,17 @@ export default {
       }
     }
   },
+  beforeUpdate() {
+    if (!this.startStopA) {
+      clearInterval(this.timerA);
+    }
+    if (!this.startStopB) {
+      clearInterval(this.timerB);
+    }
+    if (!this.startStopC) {
+      clearInterval(this.timerC);
+    }
+  },
   mounted() {
     if (this.changesA && this.changesB && this.changesC === []) {
       this.firstObjects();
@@ -219,11 +227,18 @@ export default {
     this.timerC = setInterval(() => {
       this.calculations("C");
     }, 2000);
+
+    this.startStopA = !this.$root.startStopA || !this.startStopA;
+    this.startStopB = !this.$root.startStopB || !this.startStopB;
+    this.startStopC = !this.$root.startStopC || !this.startStopC;
   },
   beforeDestroy() {
     this.$root.initialValueA = this.initialValueA;
     this.$root.initialValueB = this.initialValueB;
     this.$root.initialValueC = this.initialValueC;
+    this.$root.startStopA = !this.startStopA;
+    this.$root.startStopB = !this.startStopB;
+    this.$root.startStopC = !this.startStopC;
     clearInterval(this.timerA);
     clearInterval(this.timerB);
     clearInterval(this.timerC);
