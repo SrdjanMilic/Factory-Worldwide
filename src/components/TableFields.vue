@@ -257,7 +257,7 @@ button {
   background-color: #42b983;
   color: #ffffff;
   margin-top: 7px;
-  padding: 5px 10px;
+  padding: 6px 12px;
   font-weight: bold;
 
   &:hover {
