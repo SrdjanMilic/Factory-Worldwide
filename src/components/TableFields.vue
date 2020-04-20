@@ -106,11 +106,11 @@ export default {
       }
     },
     replaceNumbersArray() {
-      // replace random A, B numbers at time interval
-      const numberA = Number((Math.random() * 1 + 1).toFixed(2)); // first number A
-      const numberB = Number((Math.random() * 1 + 1).toFixed(2)); // first number B
-      const numberC = Number((Math.random() * 1 + 1).toFixed(2)); // first number C
-      this.randomNumbersArray.splice(0, 3, numberA, numberB, numberC);
+      // replace random A, B, C... numbers at time interval
+      const A = Number((Math.random() * 1 + 1).toFixed(2)); // first number A
+      const B = Number((Math.random() * 1 + 1).toFixed(2)); // first number B
+      const C = Number((Math.random() * 1 + 1).toFixed(2)); // first number C
+      this.randomNumbersArray.splice(0, 3, A, B, C);
     },
     toggleInterval(field) {
       // button toggle
