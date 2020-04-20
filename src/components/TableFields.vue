@@ -211,19 +211,14 @@ export default {
     setInterval(this.replaceNumbersArray, 2000);
 
     this.initialValueA = this.$root.initialValueA || 3;
-    this.timer[0] = setInterval(() => {
-      this.calculations("A");
-    }, 2000);
-
     this.initialValueB = this.$root.initialValueB || 3;
-    this.timer[1] = setInterval(() => {
-      this.calculations("B");
-    }, 2000);
-
     this.initialValueC = this.$root.initialValueC || 3;
-    this.timer[2] = setInterval(() => {
-      this.calculations("C");
-    }, 2000);
+
+    this.fields.forEach((value, index) => {
+      this.timer[index] = setInterval(() => {
+        this.calculations(value);
+      }, 2000);
+    });
 
     this.startStopA = !this.$root.startStopA || !this.startStopA;
     this.startStopB = !this.$root.startStopB || !this.startStopB;
@@ -236,9 +231,10 @@ export default {
     this.$root.startStopA = !this.startStopA;
     this.$root.startStopB = !this.startStopB;
     this.$root.startStopC = !this.startStopC;
-    clearInterval(this.timer[0]);
-    clearInterval(this.timer[1]);
-    clearInterval(this.timer[2]);
+
+    this.timer.forEach((value) => {
+      clearInterval(value);
+    });
   }
 };
 </script>
