@@ -197,15 +197,12 @@ export default {
     }
   },
   beforeUpdate() {
-    if (!this.startStopA) {
-      clearInterval(this.timer[0]);
-    }
-    if (!this.startStopB) {
-      clearInterval(this.timer[1]);
-    }
-    if (!this.startStopC) {
-      clearInterval(this.timer[2]);
-    }
+    const array = [this.startStopA, this.startStopB, this.startStopC];
+    array.forEach((value, index) => {
+      if (!value) {
+        clearInterval(this.timer[index]);
+      }
+    });
   },
   mounted() {
     if (this.changesA && this.changesB && this.changesC === []) {
