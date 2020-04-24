@@ -4,7 +4,7 @@
       <router-link to="/">Home</router-link>&nbsp;|
       <router-link to="/statistics">Statistics</router-link>
     </div>
-    <router-view :changesA.sync="changesA" :changesB.sync="changesB" :changesC.sync="changesC" />
+    <router-view :changesEmptyArray.sync="changesEmptyArray" />
   </div>
 </template>
 
@@ -13,10 +13,13 @@ export default {
   name: "App",
   data() {
     return {
-      changesA: [],
-      changesB: [],
-      changesC: []
+      changesEmptyArray: []
     };
+  },
+  mounted() {
+    for (let i = 0; i < 3; i++) {
+      this.changesEmptyArray.push([]);
+    }
   }
 };
 </script>

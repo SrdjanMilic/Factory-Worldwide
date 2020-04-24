@@ -7,7 +7,7 @@
         <th>+/-</th>
         <th>Time</th>
       </tr>
-      <tr v-for="(change, index) in changesArray[index]" :key="index">
+      <tr v-for="(change, index) in changesEmptyArray[index]" :key="index">
         <td>{{ change.field }}</td>
         <td>{{ change.value }}</td>
         <td v-show="change.indicator == '+'">&#x2B06;</td>
@@ -22,24 +22,17 @@
 export default {
   name: "Statistics",
   props: {
-    changesA: {
-      type: Array,
-      required: true
-    },
-    changesB: {
-      type: Array,
-      required: true
-    },
-    changesC: {
+    changesEmptyArray: {
       type: Array,
       required: true
     }
   },
   data() {
     return {
-      fields: ["A", "B", "C"],
-      changesArray: [this.changesA, this.changesB, this.changesC]
+      fields: ["A", "B", "C"]
     };
+  },
+  mounted() {
   }
 };
 </script>

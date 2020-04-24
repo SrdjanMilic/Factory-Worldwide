@@ -46,17 +46,10 @@
 export default {
   name: "TableFields",
   props: {
-    changesA: {
+    // Array of empty arrays for table/fields objects
+    changesEmptyArray: {
       type: Array,
-      required: false
-    },
-    changesB: {
-      type: Array,
-      required: false
-    },
-    changesC: {
-      type: Array,
-      required: false
+      required: true
     }
   },
   data() {
@@ -89,20 +82,18 @@ export default {
     firstObjects() {
       // creates first objects A, B, C...
       for (let i = 0; i < this.fields.length; i++) {
-        const obj = {};
         const date = new Date();
+
+        const obj = {};
         obj.field = this.fields[i];
         obj.value = Number((Math.random() * 1 + 1).toFixed(2));
         obj.indicator = this.signsArray[
           Math.floor(Math.random() * this.signsArray.length)
         ];
         obj.time = date.toLocaleTimeString();
-        this.changesA.push({ ...obj });
-        this.changesB.push({ ...obj });
-        this.changesC.push({ ...obj });
-        this.$emit("update:changesA", [...this.changesA]);
-        this.$emit("update:changesB", [...this.changesB]);
-        this.$emit("update:changesC", [...this.changesC]);
+
+        this.changesEmptyArray.push({ ...obj });
+        this.$emit("update:changesEmptyArray", [...this.changesEmptyArray]);
       }
     },
     replaceNumbersArray() {
@@ -154,13 +145,15 @@ export default {
           ? (this.initialValueA += this.randomNumbersArray[0])
           : (this.initialValueA -= this.randomNumbersArray[0]);
         const date = new Date();
+
         const newChange = {};
         newChange.field = "A";
         newChange.indicator = this.randomSign[0];
         newChange.value = this.randomNumbersArray[0];
         newChange.time = date.toLocaleTimeString();
-        this.changesA.push(newChange);
-        this.$emit("update:changesA", [...this.changesA]);
+
+        this.changesEmptyArray[0].push(newChange);
+        this.$emit("update:changesEmptyArray[0]", [...this.changesEmptyArray[0]]);
       }
       if (field === "B") {
         this.randomSign[1] = this.signsArray[
@@ -170,13 +163,15 @@ export default {
           ? (this.initialValueB += this.randomNumbersArray[1])
           : (this.initialValueB -= this.randomNumbersArray[1]);
         const date = new Date();
+
         const newChange = {};
         newChange.field = "B";
         newChange.indicator = this.randomSign[1];
         newChange.value = this.randomNumbersArray[1];
         newChange.time = date.toLocaleTimeString();
-        this.changesB.push(newChange);
-        this.$emit("update:changesB", [...this.changesB]);
+
+        this.changesEmptyArray[1].push(newChange);
+        this.$emit("update:changesEmptyArray[1]", [...this.changesEmptyArray[1]]);
       }
       if (field === "C") {
         this.randomSign[2] = this.signsArray[
@@ -186,13 +181,15 @@ export default {
           ? (this.initialValueC += this.randomNumbersArray[2])
           : (this.initialValueC -= this.randomNumbersArray[2]);
         const date = new Date();
+
         const newChange = {};
         newChange.field = "C";
-        newChange.indicator = this.randomSign[0];
+        newChange.indicator = this.randomSign[2];
         newChange.value = this.randomNumbersArray[2];
         newChange.time = date.toLocaleTimeString();
-        this.changesC.push(newChange);
-        this.$emit("update:changesC", [...this.changesC]);
+
+        this.changesEmptyArray[2].push(newChange);
+        this.$emit("update:changesEmptyArra[2]y", [...this.changesEmptyArray[2]]);
       }
     }
   },
@@ -205,7 +202,7 @@ export default {
     });
   },
   mounted() {
-    if (this.changesA && this.changesB && this.changesC === []) {
+    if (this.changesEmptyArray === []) {
       this.firstObjects();
     }
     setInterval(this.replaceNumbersArray, 2000);
@@ -232,7 +229,7 @@ export default {
     this.$root.startStopB = !this.startStopB;
     this.$root.startStopC = !this.startStopC;
 
-    this.timer.forEach((value) => {
+    this.timer.forEach(value => {
       clearInterval(value);
     });
   }
