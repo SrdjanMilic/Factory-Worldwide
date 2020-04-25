@@ -1,44 +1,43 @@
 <template>
   <div>
-    <table>
-      <tr>
-        <th>A</th>
-        <td class="sign">{{ this.randomSign[0] }}</td>
-        <td>{{ valueA }}</td>
-        <td v-show="this.randomSign[0] == '+'">&#x2B06;</td>
-        <td v-show="this.randomSign[0] == '-'">&#x2B07;</td>
-      </tr>
-    </table>
-    <button @click="toggleInterval('A')" :class="[startStopA ? 'button-start' : 'button-stop']">
-      <span v-show="this.startStopA">Stop</span>
-      <span v-show="!this.startStopA">Start</span>
-    </button>
-    <table>
-      <tr>
-        <th>B</th>
-        <td class="sign">{{ this.randomSign[1] }}</td>
-        <td>{{ valueB }}</td>
-        <td v-show="this.randomSign[1] == '+'">&#x2B06;</td>
-        <td v-show="this.randomSign[1] == '-'">&#x2B07;</td>
-      </tr>
-    </table>
-    <button @click="toggleInterval('B')" :class="[startStopB ? 'button-start' : 'button-stop']">
-      <span v-show="this.startStopB">Stop</span>
-      <span v-show="!this.startStopB">Start</span>
-    </button>
-    <table>
-      <tr>
-        <th>C</th>
-        <td class="sign">{{ this.randomSign[2] }}</td>
-        <td>{{ valueC }}</td>
-        <td v-show="this.randomSign[2] == '+'">&#x2B06;</td>
-        <td v-show="this.randomSign[2] == '-'">&#x2B07;</td>
-      </tr>
-    </table>
-    <button @click="toggleInterval('C')" :class="[startStopC ? 'button-start' : 'button-stop']">
-      <span v-show="this.startStopC">Stop</span>
-      <span v-show="!this.startStopC">Start</span>
-    </button>
+    <div class="wrapper" v-for="(field, index) in fields" :key="index">
+      <table>
+        <tr>
+          <th>{{ field }}</th>
+          <td class="sign">{{ randomSign[index] }}</td>
+          <td>{{ value[index].toFixed(2) }}</td>
+          <td v-show="randomSign[index] == '+'">&#x2B06;</td>
+          <td v-show="randomSign[index] == '-'">&#x2B07;</td>
+        </tr>
+      </table>
+
+      <button
+        @click="toggleInterval(field)"
+        v-if="field === 'A'"
+        :class="[startStopA ? 'button-start' : 'button-stop']"
+      >
+        <span v-show="startStopA">Stop</span>
+        <span v-show="!startStopA">Start</span>
+      </button>
+
+      <button
+        @click="toggleInterval(field)"
+        v-if="field === 'B'"
+        :class="[startStopB ? 'button-start' : 'button-stop']"
+      >
+        <span v-show="startStopB">Stop</span>
+        <span v-show="!startStopB">Start</span>
+      </button>
+
+      <button
+        @click="toggleInterval(field)"
+        v-if="field === 'C'"
+        :class="[startStopC ? 'button-start' : 'button-stop']"
+      >
+        <span v-show="startStopC">Stop</span>
+        <span v-show="!startStopC">Start</span>
+      </button>
+    </div>
   </div>
 </template>
 
@@ -68,14 +67,13 @@ export default {
     };
   },
   computed: {
-    valueA() {
-      return this.initialValueA.toFixed(2);
-    },
-    valueB() {
-      return this.initialValueB.toFixed(2);
-    },
-    valueC() {
-      return this.initialValueC.toFixed(2);
+    value() {
+      const array = [
+        this.initialValueA,
+        this.initialValueB,
+        this.initialValueC
+      ];
+      return array;
     }
   },
   methods: {
@@ -153,7 +151,9 @@ export default {
         newChange.time = date.toLocaleTimeString();
 
         this.changesEmptyArray[0].push(newChange);
-        this.$emit("update:changesEmptyArray[0]", [...this.changesEmptyArray[0]]);
+        this.$emit("update:changesEmptyArray[0]", [
+          ...this.changesEmptyArray[0]
+        ]);
       }
       if (field === "B") {
         this.randomSign[1] = this.signsArray[
@@ -171,7 +171,9 @@ export default {
         newChange.time = date.toLocaleTimeString();
 
         this.changesEmptyArray[1].push(newChange);
-        this.$emit("update:changesEmptyArray[1]", [...this.changesEmptyArray[1]]);
+        this.$emit("update:changesEmptyArray[1]", [
+          ...this.changesEmptyArray[1]
+        ]);
       }
       if (field === "C") {
         this.randomSign[2] = this.signsArray[
@@ -189,7 +191,9 @@ export default {
         newChange.time = date.toLocaleTimeString();
 
         this.changesEmptyArray[2].push(newChange);
-        this.$emit("update:changesEmptyArra[2]y", [...this.changesEmptyArray[2]]);
+        this.$emit("update:changesEmptyArra[2]y", [
+          ...this.changesEmptyArray[2]
+        ]);
       }
     }
   },
@@ -237,11 +241,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-button {
+.wrapper {
   margin-bottom: 15px;
   &:last-child {
-    margin-bottom: 0;
+    margin-top: 0;
   }
+}
+button {
   border: 1px solid transparent;
   border-radius: 0;
   background-color: #42b983;
