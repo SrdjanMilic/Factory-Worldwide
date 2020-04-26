@@ -4,21 +4,22 @@
       <router-link to="/">Home</router-link>&nbsp;|
       <router-link to="/statistics">Statistics</router-link>
     </div>
-    <router-view :changesEmptyArray.sync="changesEmptyArray" />
+    <router-view :changes.sync="changes" />
   </div>
 </template>
 
 <script>
+import store from "./store";
 export default {
   name: "App",
   data() {
     return {
-      changesEmptyArray: []
+      changes: store.changes
     };
   },
   mounted() {
     for (let i = 0; i < 3; i++) {
-      this.changesEmptyArray.push([]);
+      this.changes.push([]);
     }
   }
 };

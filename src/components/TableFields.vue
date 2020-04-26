@@ -42,15 +42,9 @@
 </template>
 
 <script>
+import store from "../store";
 export default {
   name: "TableFields",
-  props: {
-    // Array of empty arrays for table/fields objects
-    changesEmptyArray: {
-      type: Array,
-      required: true
-    }
-  },
   data() {
     return {
       timer: [undefined, undefined, undefined],
@@ -63,7 +57,8 @@ export default {
       initialValueC: 3,
       randomNumbersArray: [],
       randomSign: ["+", "+", "+"],
-      signsArray: ["+", "-"]
+      signsArray: ["+", "-"],
+      changes: store.changes
     };
   },
   computed: {
@@ -90,8 +85,8 @@ export default {
         ];
         obj.time = date.toLocaleTimeString();
 
-        this.changesEmptyArray.push({ ...obj });
-        this.$emit("update:changesEmptyArray", [...this.changesEmptyArray]);
+        this.changes.push({ ...obj });
+        this.$emit("update:changes", [...this.changes]);
       }
     },
     replaceNumbersArray() {
@@ -150,10 +145,8 @@ export default {
         newChange.value = this.randomNumbersArray[0];
         newChange.time = date.toLocaleTimeString();
 
-        this.changesEmptyArray[0].push(newChange);
-        this.$emit("update:changesEmptyArray[0]", [
-          ...this.changesEmptyArray[0]
-        ]);
+        this.changes[0].push(newChange);
+        this.$emit("update:changes[0]", [...this.changes[0]]);
       }
       if (field === "B") {
         this.randomSign[1] = this.signsArray[
@@ -170,10 +163,8 @@ export default {
         newChange.value = this.randomNumbersArray[1];
         newChange.time = date.toLocaleTimeString();
 
-        this.changesEmptyArray[1].push(newChange);
-        this.$emit("update:changesEmptyArray[1]", [
-          ...this.changesEmptyArray[1]
-        ]);
+        this.changes[1].push(newChange);
+        this.$emit("update:changes[1]", [...this.changes[1]]);
       }
       if (field === "C") {
         this.randomSign[2] = this.signsArray[
@@ -190,10 +181,8 @@ export default {
         newChange.value = this.randomNumbersArray[2];
         newChange.time = date.toLocaleTimeString();
 
-        this.changesEmptyArray[2].push(newChange);
-        this.$emit("update:changesEmptyArra[2]y", [
-          ...this.changesEmptyArray[2]
-        ]);
+        this.changes[2].push(newChange);
+        this.$emit("update:changes[2]", [...this.changes[2]]);
       }
     }
   },
@@ -206,7 +195,7 @@ export default {
     });
   },
   mounted() {
-    if (this.changesEmptyArray === []) {
+    if (this.changes === []) {
       this.firstObjects();
     }
     setInterval(this.replaceNumbersArray, 2000);
@@ -229,6 +218,7 @@ export default {
     this.$root.initialValueA = this.initialValueA;
     this.$root.initialValueB = this.initialValueB;
     this.$root.initialValueC = this.initialValueC;
+
     this.$root.startStopA = !this.startStopA;
     this.$root.startStopB = !this.startStopB;
     this.$root.startStopC = !this.startStopC;
