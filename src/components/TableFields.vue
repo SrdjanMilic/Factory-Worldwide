@@ -5,7 +5,7 @@
         <tr>
           <th>{{ field }}</th>
           <td class="sign">{{ randomSign[index] }}</td>
-          <td>{{ value[index].toFixed(2) }}</td>
+          <td>{{ initialValues[index].toFixed(2) }}</td>
           <td v-show="randomSign[index] == '+'">&#x2B06;</td>
           <td v-show="randomSign[index] == '-'">&#x2B07;</td>
         </tr>
@@ -55,14 +55,14 @@ export default {
       initialValueA: 3,
       initialValueB: 3,
       initialValueC: 3,
-      randomNumbersArray: [],
+      randomNumbers: [],
       randomSign: ["+", "+", "+"],
-      signsArray: ["+", "-"],
+      signs: ["+", "-"],
       changes: store.changes
     };
   },
   computed: {
-    value() {
+    initialValues() {
       const array = [
         this.initialValueA,
         this.initialValueB,
@@ -80,8 +80,8 @@ export default {
         const obj = {};
         obj.field = this.fields[i];
         obj.value = Number((Math.random() * 1 + 1).toFixed(2));
-        obj.indicator = this.signsArray[
-          Math.floor(Math.random() * this.signsArray.length)
+        obj.indicator = this.signs[
+          Math.floor(Math.random() * this.signs.length)
         ];
         obj.time = date.toLocaleTimeString();
 
@@ -94,7 +94,7 @@ export default {
       const A = Number((Math.random() * 1 + 1).toFixed(2)); // first number A
       const B = Number((Math.random() * 1 + 1).toFixed(2)); // first number B
       const C = Number((Math.random() * 1 + 1).toFixed(2)); // first number C
-      this.randomNumbersArray.splice(0, 3, A, B, C);
+      this.randomNumbers.splice(0, 3, A, B, C);
     },
     toggleInterval(field) {
       // button toggle
@@ -130,59 +130,41 @@ export default {
       }
     },
     calculations(field) {
+      this.fields.forEach((value, index) => {
+        if (field === value) {
+          this.randomSign[index] = this.signs[
+            Math.floor(Math.random() * this.signs.length)
+          ];
+
+          const date = new Date();
+          const newChange = [{}, {}, {}];
+
+          newChange[index].field = field;
+          newChange[index].indicator = this.randomSign[index];
+          newChange[index].value = this.randomNumbers[index];
+          newChange[index].time = date.toLocaleTimeString();
+
+          this.changes[index].push(newChange[index]);
+          this.$emit("update:changes[index]", [...this.changes[index]]);
+        }
+      });
+
       if (field === "A") {
-        this.randomSign[0] = this.signsArray[
-          Math.floor(Math.random() * this.signsArray.length)
-        ];
         this.randomSign[0] === "+"
-          ? (this.initialValueA += this.randomNumbersArray[0])
-          : (this.initialValueA -= this.randomNumbersArray[0]);
-        const date = new Date();
-
-        const newChange = {};
-        newChange.field = "A";
-        newChange.indicator = this.randomSign[0];
-        newChange.value = this.randomNumbersArray[0];
-        newChange.time = date.toLocaleTimeString();
-
-        this.changes[0].push(newChange);
-        this.$emit("update:changes[0]", [...this.changes[0]]);
+          ? (this.initialValueA += this.randomNumbers[0])
+          : (this.initialValueA -= this.randomNumbers[0]);
       }
+
       if (field === "B") {
-        this.randomSign[1] = this.signsArray[
-          Math.floor(Math.random() * this.signsArray.length)
-        ];
         this.randomSign[1] === "+"
-          ? (this.initialValueB += this.randomNumbersArray[1])
-          : (this.initialValueB -= this.randomNumbersArray[1]);
-        const date = new Date();
-
-        const newChange = {};
-        newChange.field = "B";
-        newChange.indicator = this.randomSign[1];
-        newChange.value = this.randomNumbersArray[1];
-        newChange.time = date.toLocaleTimeString();
-
-        this.changes[1].push(newChange);
-        this.$emit("update:changes[1]", [...this.changes[1]]);
+          ? (this.initialValueB += this.randomNumbers[1])
+          : (this.initialValueB -= this.randomNumbers[1]);
       }
+
       if (field === "C") {
-        this.randomSign[2] = this.signsArray[
-          Math.floor(Math.random() * this.signsArray.length)
-        ];
         this.randomSign[2] === "+"
-          ? (this.initialValueC += this.randomNumbersArray[2])
-          : (this.initialValueC -= this.randomNumbersArray[2]);
-        const date = new Date();
-
-        const newChange = {};
-        newChange.field = "C";
-        newChange.indicator = this.randomSign[2];
-        newChange.value = this.randomNumbersArray[2];
-        newChange.time = date.toLocaleTimeString();
-
-        this.changes[2].push(newChange);
-        this.$emit("update:changes[2]", [...this.changes[2]]);
+          ? (this.initialValueC += this.randomNumbers[2])
+          : (this.initialValueC -= this.randomNumbers[2]);
       }
     }
   },
