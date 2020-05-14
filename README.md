@@ -19,15 +19,3 @@ Create a Vue.js application with two pages.
 3. When going from `/` to `/statistics` all the changing should be paused, and on returning back it should be resumed.
 
 You can choose any libraries you want
-
-**Project setup:**
-
-```bash
-npm i
-```
-
-**Compiles and hot-reloads for development:**
-
-```bash
-npm run serve
-```
