@@ -27,8 +27,6 @@ export default {
       fields: ["A", "B", "C"],
       changes: store.changes
     };
-  },
-  mounted() {
   }
 };
 </script>
