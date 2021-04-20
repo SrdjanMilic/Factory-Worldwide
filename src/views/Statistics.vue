@@ -10,8 +10,8 @@
       <tr v-for="(change, index) in changes[index]" :key="index">
         <td>{{ change.field }}</td>
         <td>{{ change.value }}</td>
-        <td v-show="change.indicator == '+'">&#x2B06;</td>
-        <td v-show="change.indicator == '-'">&#x2B07;</td>
+        <td v-show="change.indicator === '+'">&#x2B06;</td>
+        <td v-show="change.indicator === '-'">&#x2B07;</td>
         <td>{{ change.time }}</td>
       </tr>
     </table>
@@ -19,12 +19,12 @@
 </template>
 
 <script>
-import store from "../store";
+import store from '../store';
 export default {
-  name: "Statistics",
+  name: 'Statistics',
   data() {
     return {
-      fields: ["A", "B", "C"],
+      fields: ['A', 'B', 'C'],
       changes: store.changes
     };
   }

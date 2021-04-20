@@ -9,9 +9,9 @@
 </template>
 
 <script>
-import store from "./store";
+import store from './store';
 export default {
-  name: "App",
+  name: 'App',
   data() {
     return {
       changes: store.changes

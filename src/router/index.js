@@ -1,27 +1,27 @@
-import Vue from "vue";
-import VueRouter from "vue-router";
-import TableFields from "../components/TableFields.vue";
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+import TableFields from '../components/TableFields.vue';
 
 Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/",
-    name: "Home",
+    path: '/',
+    name: 'Home',
     component: TableFields
   },
   {
-    path: "/statistics",
-    name: "Statistics",
+    path: '/statistics',
+    name: 'Statistics',
     // route level code-splitting
     // this generates a separate chunk (statistic.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "statistic" */ "../views/Statistics.vue")
+    component: () => import(/* webpackChunkName: "statistic" */ '../views/Statistics.vue')
   }
 ];
 
 const router = new VueRouter({
-  mode: "history",
+  mode: 'history',
   base: process.env.BASE_URL,
   routes
 });
