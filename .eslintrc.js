@@ -1,20 +1,46 @@
 module.exports = {
   root: true,
   env: {
-    node: true
+    node: true,
+    browser: true
   },
   extends: [
     'plugin:vue/essential',
-    '@vue/standard'
+    'eslint:recommended'
   ],
   parserOptions: {
-    parser: 'babel-eslint'
+    ecmaVersion: 2020
   },
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-    "semi": ["error", "always"],
-    "quotes": ["error", "double"],
-    "space-before-function-paren": ["error", "never"]
+    indent: [
+      "error", 2
+    ],
+    quotes: [
+      "error",
+      "single"
+    ],
+    semi: [
+      "error",
+      "always"
+    ],
+    curly: "error",
+    "brace-style": "error",
+    "no-extra-semi": "error",
+    "no-irregular-whitespace": "error",
+    "no-multi-spaces": "error",
+    "space-before-function-paren": [
+      "error",
+      "never"
+    ],
+    "array-bracket-spacing": [
+      "error",
+      "never"
+    ],
+    "eol-last": [
+      "error",
+      "always"
+    ]
   }
 }
