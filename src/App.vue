@@ -1,24 +1,24 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link>&nbsp;|
+    <nav>
+      <router-link to="/">Home</router-link>
+      &nbsp;|&nbsp;
       <router-link to="/statistics">Statistics</router-link>
-    </div>
+    </nav>
     <router-view :changes.sync="changes" />
   </div>
 </template>
 
 <script>
-import store from './store';
+import { mapState } from 'vuex';
+
 export default {
   name: 'App',
-  data() {
-    return {
-      changes: store.changes
-    };
+  computed: {
+    ...mapState(['changes', 'fields'])
   },
   mounted() {
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i <= this.fields.length; i++) {
       this.changes.push([]);
     }
   }
@@ -33,7 +33,7 @@ export default {
   color: #2c3e50;
 }
 
-#nav {
+nav {
   padding: 30px 0;
 
   a {

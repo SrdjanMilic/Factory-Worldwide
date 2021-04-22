@@ -28,12 +28,11 @@ export default {
 <style lang="scss" scoped>
 .statistics {
   display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
 }
+
 table {
-  margin-right: 30px;
-  &:last-child {
-    margin: 0;
-  }
   tr:first-child {
     background-color: #f2f2f2;
   }
