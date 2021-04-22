@@ -46,7 +46,7 @@ import { mapState, mapMutations } from 'vuex';
 
 export default {
   name: 'TableFields',
-  data() {
+  data () {
     return {
       startStopA: true,
       startStopB: true,
@@ -67,7 +67,7 @@ export default {
       'randomNumbers'
     ]),
 
-    initialValues() {
+    initialValues () {
       let array;
       array = [
         this.initialValueA,
@@ -80,7 +80,7 @@ export default {
   methods: {
     ...mapMutations(['replaceNumbersArray']),
 
-    toggleInterval(field) {
+    toggleInterval (field) {
       // button toggle
       if (field === 'A') {
         this.startStopA = !this.startStopA;
@@ -116,7 +116,7 @@ export default {
         clearInterval(this.arraysInterval);
       }
     },
-    calculations(field) {
+    calculations (field) {
       this.fields.forEach((value, index) => {
         if (field === value) {
           this.randomSign[index] = this.signs[
@@ -154,7 +154,7 @@ export default {
       }
     }
   },
-  beforeUpdate() {
+  beforeUpdate () {
     const array = [this.startStopA, this.startStopB, this.startStopC];
     array.forEach((value, index) => {
       if (!value) {
@@ -162,7 +162,7 @@ export default {
       }
     });
   },
-  mounted() {
+  mounted () {
     if (!this.startStopA && !this.startStopB && !this.startStopC) {
       clearInterval(this.arraysInterval);
     } else {
@@ -184,7 +184,7 @@ export default {
     this.startStopC = !this.$root.startStopC || !this.startStopC;
 
   },
-  beforeDestroy() {
+  beforeDestroy () {
     clearInterval(this.arraysInterval);
 
     this.$root.initialValueA = this.initialValueA;

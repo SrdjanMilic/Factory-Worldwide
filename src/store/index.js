@@ -13,7 +13,7 @@ const store = new Vuex.Store({
     randomNumbers: []
   },
   mutations: {
-    replaceNumbersArray(state) {
+    replaceNumbersArray (state) {
       // replace random A, B, C... numbers at time interval
       const A = Number((Math.random() + 1).toFixed(2)); // first number A
       const B = Number((Math.random() + 1).toFixed(2)); // first number B
