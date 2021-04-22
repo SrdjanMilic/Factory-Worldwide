@@ -32,7 +32,7 @@ module.exports = {
     "no-multi-spaces": "error",
     "space-before-function-paren": [
       "error",
-      "never"
+      "always"
     ],
     "array-bracket-spacing": [
       "error",
