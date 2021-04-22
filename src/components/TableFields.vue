@@ -6,8 +6,8 @@
           <th>{{ field }}</th>
           <td class="sign">{{ randomSign[index] }}</td>
           <td>{{ initialValues[index].toFixed(2) }}</td>
-          <td v-show="randomSign[index] === '+'">&#x2B06;</td>
-          <td v-show="randomSign[index] === '-'">&#x2B07;</td>
+          <td v-show="$store.state.randomSign[index] === '+'">&#x2B06;</td>
+          <td v-show="$store.state.randomSign[index] === '-'">&#x2B07;</td>
         </tr>
       </table>
 
@@ -42,26 +42,31 @@
 </template>
 
 <script>
-import store from '../store';
+import { mapState, mapMutations } from 'vuex';
+
 export default {
   name: 'TableFields',
   data() {
     return {
-      timer: [0, 0, 0],
-      fields: ['A', 'B', 'C'],
       startStopA: true,
       startStopB: true,
       startStopC: true,
       initialValueA: 3,
       initialValueB: 3,
       initialValueC: 3,
-      randomNumbers: [],
-      randomSign: ['+', '+', '+'],
-      signs: ['+', '-'],
-      changes: store.changes
+      arraysInterval: undefined
     };
   },
   computed: {
+    ...mapState([
+      'changes',
+      'timer',
+      'fields',
+      'signs',
+      'randomSign',
+      'randomNumbers'
+    ]),
+
     initialValues() {
       let array;
       array = [
@@ -73,30 +78,8 @@ export default {
     }
   },
   methods: {
-    firstObjects() {
-      // creates first objects A, B, C...
-      for (let i = 0; i < this.fields.length; i++) {
-        const date = new Date();
+    ...mapMutations(['replaceNumbersArray']),
 
-        const obj = {};
-        obj.field = this.fields[i];
-        obj.value = Number((Math.random() + 1).toFixed(2));
-        obj.indicator = this.signs[
-          Math.floor(Math.random() * this.signs.length)
-        ];
-        obj.time = date.toLocaleTimeString();
-
-        this.changes.push({ ...obj });
-        this.$emit('update:changes', [...this.changes]);
-      }
-    },
-    replaceNumbersArray() {
-      // replace random A, B, C... numbers at time interval
-      const A = Number((Math.random() + 1).toFixed(2)); // first number A
-      const B = Number((Math.random() + 1).toFixed(2)); // first number B
-      const C = Number((Math.random() + 1).toFixed(2)); // first number C
-      this.randomNumbers.splice(0, 3, A, B, C);
-    },
     toggleInterval(field) {
       // button toggle
       if (field === 'A') {
@@ -129,6 +112,9 @@ export default {
           clearInterval(this.timer[2]);
         }
       }
+      if (!this.startStopA && !this.startStopB && !this.startStopC) {
+        clearInterval(this.arraysInterval);
+      }
     },
     calculations(field) {
       this.fields.forEach((value, index) => {
@@ -136,7 +122,6 @@ export default {
           this.randomSign[index] = this.signs[
             Math.floor(Math.random() * this.signs.length)
           ];
-
           const date = new Date();
           const newChange = [{}, {}, {}];
 
@@ -178,10 +163,11 @@ export default {
     });
   },
   mounted() {
-    if (this.changes === []) {
-      this.firstObjects();
+    if (!this.startStopA && !this.startStopB && !this.startStopC) {
+      clearInterval(this.arraysInterval);
+    } else {
+      this.arraysInterval = setInterval(this.replaceNumbersArray, 2000);
     }
-    setInterval(this.replaceNumbersArray, 2000);
 
     this.initialValueA = this.$root.initialValueA || 3;
     this.initialValueB = this.$root.initialValueB || 3;
@@ -196,8 +182,11 @@ export default {
     this.startStopA = !this.$root.startStopA || !this.startStopA;
     this.startStopB = !this.$root.startStopB || !this.startStopB;
     this.startStopC = !this.$root.startStopC || !this.startStopC;
+
   },
   beforeDestroy() {
+    clearInterval(this.arraysInterval);
+
     this.$root.initialValueA = this.initialValueA;
     this.$root.initialValueB = this.initialValueB;
     this.$root.initialValueC = this.initialValueC;

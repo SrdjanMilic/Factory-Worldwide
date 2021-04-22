@@ -1,13 +1,13 @@
 <template>
   <div class="statistics">
-    <table v-for="(field, index) in fields" :key="index">
+    <table v-for="(field, index) in $store.state.fields" :key="index">
       <tr>
         <th>Field</th>
         <th>Value</th>
         <th>+/-</th>
         <th>Time</th>
       </tr>
-      <tr v-for="(change, index) in changes[index]" :key="index">
+      <tr v-for="(change, index) in $store.state.changes[index]" :key="index">
         <td>{{ change.field }}</td>
         <td>{{ change.value }}</td>
         <td v-show="change.indicator === '+'">&#x2B06;</td>
@@ -19,15 +19,9 @@
 </template>
 
 <script>
-import store from '../store';
+
 export default {
-  name: 'Statistics',
-  data() {
-    return {
-      fields: ['A', 'B', 'C'],
-      changes: store.changes
-    };
-  }
+  name: 'Statistics'
 };
 </script>
 

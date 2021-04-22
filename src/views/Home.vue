@@ -6,7 +6,7 @@
 
 <script>
 // @ is an alias to /src
-import TableFields from '@/components/TableFields.vue';
+import TableFields from '@/components/TableFields';
 
 export default {
   name: 'Home',
