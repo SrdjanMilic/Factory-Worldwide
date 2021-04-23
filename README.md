@@ -1,4 +1,6 @@
-# Factory Worldwide
+# Super dynamic data
+
+Code challenge given by some company.
 
 **Task requirements:**  
 
