@@ -13,9 +13,7 @@ body {
   td {
     padding: 5px 10px;
     vertical-align: initial;
-    &:first-child {
-      text-align: center;
-    }
+    text-align: center;
   }
 
   button:focus {
