@@ -5,7 +5,7 @@
         <tr>
           <th>{{ field }}</th>
           <td class="sign">{{ randomSign[index] }}</td>
-          <td>{{ initialValues[index].toFixed(2) }}</td>
+          <td class="value">{{ initialValues[index].toFixed(2) }}</td>
           <td v-show="$store.state.randomSign[index] === '+'">&#x2B06;</td>
           <td v-show="$store.state.randomSign[index] === '-'">&#x2B07;</td>
         </tr>
@@ -54,7 +54,7 @@ export default {
       initialValueA: 3,
       initialValueB: 3,
       initialValueC: 3,
-      arraysInterval: undefined
+      arraysInterval: null
     };
   },
   computed: {
@@ -123,15 +123,14 @@ export default {
             Math.floor(Math.random() * this.signs.length)
           ];
           const date = new Date();
-          const newChange = [{}, {}, {}];
+          const newChange = [];
 
-          newChange[index].field = field;
-          newChange[index].indicator = this.randomSign[index];
-          newChange[index].value = this.randomNumbers[index];
-          newChange[index].time = date.toLocaleTimeString();
+          newChange.field = field;
+          newChange.indicator = this.randomSign[index];
+          newChange.value = this.randomNumbers[index];
+          newChange.time = date.toLocaleTimeString();
 
-          this.changes[index].push(newChange[index]);
-          this.$emit('update:changes[index]', [...this.changes[index]]);
+          this.changes[index].push(newChange);
         }
       });
 
@@ -163,21 +162,18 @@ export default {
     });
   },
   mounted () {
-    if (!this.startStopA && !this.startStopB && !this.startStopC) {
-      clearInterval(this.arraysInterval);
-    } else {
-      this.arraysInterval = setInterval(this.replaceNumbersArray, 2000);
-    }
-
-    this.initialValueA = this.$root.initialValueA || 3;
-    this.initialValueB = this.$root.initialValueB || 3;
-    this.initialValueC = this.$root.initialValueC || 3;
+    console.log(`${this.changes}`);
+    this.arraysInterval = setInterval(this.replaceNumbersArray, 2000);
 
     this.fields.forEach((value, index) => {
       this.timer[index] = setInterval(() => {
         this.calculations(value);
       }, 2000);
     });
+
+    this.initialValueA = this.$root.initialValueA || 3;
+    this.initialValueB = this.$root.initialValueB || 3;
+    this.initialValueC = this.$root.initialValueC || 3;
 
     this.startStopA = !this.$root.startStopA || !this.startStopA;
     this.startStopB = !this.$root.startStopB || !this.startStopB;
@@ -217,6 +213,7 @@ button {
   margin-top: 7px;
   padding: 6px 12px;
   font-weight: bold;
+  width: 80px;
 
   &:hover {
     opacity: 0.9;
@@ -230,7 +227,10 @@ button {
   background-color: #42b983;
 }
 .sign {
-  width: 12px;
-  text-align: center;
+  width: 10px;
+}
+
+.value {
+  width: 50px;
 }
 </style>
