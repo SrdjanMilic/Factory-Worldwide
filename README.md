@@ -1,6 +1,6 @@
 # Super dynamic data
 
-Code challenge given by some company.
+This code challenge was given by some company for skills assessment purposes.
 
 **Task requirements:**  
 
