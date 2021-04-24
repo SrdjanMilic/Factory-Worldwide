@@ -9,7 +9,7 @@
       </tr>
       <tr v-for="(change, index) in $store.state.changes[index]" :key="index">
         <td>{{ change.field }}</td>
-        <td>{{ change.value }}</td>
+        <td>{{ change.value.toFixed(2) }}</td>
         <td v-show="change.indicator === '+'">&#x2B06;</td>
         <td v-show="change.indicator === '-'">&#x2B07;</td>
         <td>{{ change.time }}</td>
