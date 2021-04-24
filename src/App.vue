@@ -17,7 +17,7 @@ export default {
   computed: {
     ...mapState(['changes', 'fields'])
   },
-  mounted() {
+  mounted () {
     for (let i = 0; i <= this.fields.length; i++) {
       this.changes.push([]);
     }
