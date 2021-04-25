@@ -46,6 +46,7 @@ import { mapState, mapMutations } from 'vuex';
 
 export default {
   name: 'TableFields',
+
   data () {
     return {
       startStopA: true,
@@ -57,6 +58,7 @@ export default {
       arraysInterval: null
     };
   },
+
   computed: {
     ...mapState([
       'changes',
@@ -68,20 +70,16 @@ export default {
     ]),
 
     initialValues () {
-      let array;
-      array = [
-        this.initialValueA,
-        this.initialValueB,
-        this.initialValueC
-      ];
-      return array;
-    }
+      return [this.initialValueA, this.initialValueB, this.initialValueC];
+    },
   },
+
   methods: {
     ...mapMutations(['replaceNumbersArray']),
 
     toggleInterval (field) {
       // button toggle
+
       if (field === 'A') {
         this.startStopA = !this.startStopA;
         if (this.startStopA) {
@@ -92,6 +90,7 @@ export default {
           clearInterval(this.timer[0]);
         }
       }
+
       if (field === 'B') {
         this.startStopB = !this.startStopB;
         if (this.startStopB) {
@@ -102,6 +101,7 @@ export default {
           clearInterval(this.timer[1]);
         }
       }
+
       if (field === 'C') {
         this.startStopC = !this.startStopC;
         if (this.startStopC) {
@@ -116,6 +116,7 @@ export default {
         clearInterval(this.arraysInterval);
       }
     },
+
     calculations (field) {
       this.fields.forEach((value, index) => {
         if (field === value) {
@@ -153,6 +154,7 @@ export default {
       }
     }
   },
+
   beforeUpdate () {
     const array = [this.startStopA, this.startStopB, this.startStopC];
     array.forEach((value, index) => {
@@ -161,8 +163,8 @@ export default {
       }
     });
   },
+
   mounted () {
-    console.log(`${this.changes}`);
     this.arraysInterval = setInterval(this.replaceNumbersArray, 2000);
 
     this.fields.forEach((value, index) => {
@@ -180,6 +182,7 @@ export default {
     this.startStopC = !this.$root.startStopC || !this.startStopC;
 
   },
+
   beforeDestroy () {
     clearInterval(this.arraysInterval);
 
@@ -205,6 +208,7 @@ export default {
     margin-top: 0;
   }
 }
+
 button {
   border: 1px solid transparent;
   border-radius: 0;
@@ -220,12 +224,15 @@ button {
     cursor: pointer;
   }
 }
+
 .button-stop {
   background-color: #e95959;
 }
+
 .button-start {
   background-color: #42b983;
 }
+
 .sign {
   width: 10px;
 }
